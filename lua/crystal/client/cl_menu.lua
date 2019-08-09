@@ -1,7 +1,7 @@
 local GetLang
 
 hook.Add("TTT2ModifySettingsList", "TTT2CrystalBindings", function(tbl)
-	if not GetGlobalBool("ttt2_heroes") then return end
+	if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") then return end
 
 	local heroesTbl = {}
 	heroesTbl.id = "heroes"

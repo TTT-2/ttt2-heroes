@@ -106,7 +106,7 @@ if SERVER then
 
 	-- disable this role if this mod is deactivated
 	hook.Add("TTT2RoleNotSelectable", "TTT2CrystalDisableSupervillain", function(roleData)
-		if roleData == SUPERVILLAIN and not GetGlobalBool("ttt2_heroes") then
+		if roleData == SUPERVILLAIN and not GetGlobalBool("ttt2_classes") and not GetGlobalBool("ttt2_heroes") then
 			return true
 		end
 	end)
@@ -115,11 +115,13 @@ if SERVER then
 
 	-- role vote support
 	hook.Add("TTT2RoleVoteWinner", "TTT2HroleEnableCrystal", function(role)
-		if role == ROLE_SUPERVILLAIN and not GetGlobalBool("ttt2_heroes") then
+		if role == ROLE_SUPERVILLAIN and not GetGlobalBool("ttt2_classes") and not GetGlobalBool("ttt2_heroes") then
 			oldValue = "0"
 
+			RunConsoleCommand("ttt2_classes", "1")
 			RunConsoleCommand("ttt2_heroes", "1")
 		else
+			RunConsoleCommand("ttt2_classes", oldValue)
 			RunConsoleCommand("ttt2_heroes", oldValue)
 		end
 	end)

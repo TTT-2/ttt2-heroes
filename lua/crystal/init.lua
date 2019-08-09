@@ -4,10 +4,11 @@ util.AddNetworkString("TTT2Crystal")
 util.AddNetworkString("TTT2CrystalPlaceCrystal")
 util.AddNetworkString("TTT2ClientInitCrystal")
 
-local cvnm = "ttt2_heroes"
+local cvnm = "ttt2_classes"
+local cvnmh = "ttt2_heroes"
 
 function PlaceCrystal(len, sender)
-	if not GetConVar(cvnm):GetBool() then return end
+	if not GetConVar(cvnm):GetBool() or not GetConVar(cvnmh):GetBool() then return end
 
 	local ply = sender
 
@@ -68,7 +69,7 @@ local function DestroyAllCrystals()
 end
 
 function CrystalUpdate()
-	if not TTT2Crystal.AnyCrystals or not GetConVar(cvnm):GetBool() then return end
+	if not TTT2Crystal.AnyCrystals or not GetConVar(cvnm):GetBool() or not GetConVar(cvnmh):GetBool() then return end
 
 	local rs = GetRoundState()
 
@@ -118,8 +119,6 @@ end
 hook.Add("TTTPrepareRound", "TTT2ResetCrystalValues", ResetCrystals)
 
 local function CrystalInit(ply)
-	if not GetConVar(cvnm):GetBool() then return end
-
 	net.Start("TTT2ClientInitCrystal")
 	net.Send(ply)
 
@@ -143,6 +142,15 @@ cvars.AddChangeCallback("ttt2_heroes", function(cvar, old, new)
 			if TTTScoreboard then
 				TTTScoreboard.Logo = surface.GetTextureID("vgui/ttt/score_logo_heroes")
 			end
+		end
+	end
+end)
+
+cvars.AddChangeCallback("ttt2_classes", function(cvar, old, new)
+	if old ~= new then
+		if new == "0" then
+			DestroyAllCrystals()
+			ResetCrystals()
 		end
 	end
 end)

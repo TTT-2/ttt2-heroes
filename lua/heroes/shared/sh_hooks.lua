@@ -1,5 +1,5 @@
 local function PreventWhenExecutedWithoutCrystal(ply)
-        if not ply:HasCrystal() then
+        if GetGlobalBool("ttt2_heroes") and not ply:HasCrystal() then
                 return true
         end
 
