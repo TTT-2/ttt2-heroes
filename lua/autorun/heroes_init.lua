@@ -1,0 +1,17 @@
+if SERVER then
+	AddCSLuaFile()
+        AddCSLuaFile("heroes/shared/sh_hooks.lua")
+        
+        resource.AddFile("materials/vgui/ttt/score_logo_heroes.vmt")
+end
+
+include("heroes/shared/sh_hooks.lua")
+
+if CLIENT then
+	hook.Add("TTT2Initialize", "ModifyTTTScoreboardLogo", function()
+		if TTTScoreboard then
+			TTTScoreboard.Logo = surface.GetTextureID("vgui/ttt/score_logo_heroes")
+                end
+        end)
+end
+

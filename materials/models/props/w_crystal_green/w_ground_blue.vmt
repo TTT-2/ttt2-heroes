@@ -1,0 +1,9 @@
+"VertexLitGeneric" 
+{
+    "$basetexture" "models/props/w_crystal_green/w_ground_blue.vtf"
+    "$bumpmap" "models/props/w_crystal_green/w_Ground_normal.vtf"
+    "$bumpscale" "1.5" 
+    "%keywords" "crystal ground"
+    "$surfaceprop" "concrete"
+
+}
