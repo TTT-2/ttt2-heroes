@@ -21,22 +21,22 @@ if SERVER then
 		end
 	end)
 
-	hook.Add("TTTHPlaceCrystal", "TTTHPlaceCrystal", function(ply)
-		if ply:IsHero() then
-			ply:GivePassiveHeroEquipment()
-		end
+		hook.Add("TTTHPlaceCrystal", "TTTHPlaceCrystal", function(ply)
+			if ply:IsHero() then
+				ply:GivePassiveHeroEquipment()
+			end
         end)
         
-        hook.Add("TTTHEquipmentOnlyWithCrystal", "TTTCPreventClassEquipment", function(ply)
-                return PreventWhenExecutedWithoutCrystal()
+        hook.Add("TTTCPreventClassEquipment", "TTTHEquipmentOnlyWithCrystal", function(ply)
+                return PreventWhenExecutedWithoutCrystal(ply)
         end)
 else
-        hook.Add("TTTHAbortionOnlyWithCrystal", "TTTCPreventClassAbortion", function(ply)
-                return PreventWhenExecutedWithoutCrystal()
+        hook.Add("TTTCPreventClassAbortion", "TTTHAbortionOnlyWithCrystal", function(ply)
+                return PreventWhenExecutedWithoutCrystal(ply)
         end)
 
-        hook.Add("TTTHCharingOnlyWithCrystal", "TTTCPreventCharging", function(ply)
-                return PreventWhenExecutedWithoutCrystal()
+        hook.Add("TTTCPreventCharging", "TTTHCharingOnlyWithCrystal", function(ply)
+                return PreventWhenExecutedWithoutCrystal(ply)
         end)
 
         hook.Add("TTT2AddChange", "TTTHeroesChanges", function()
@@ -82,6 +82,6 @@ else
 	end)
 end
 
-hook.Add("TTTHActivationOnlyWithCrystal", "TTTCPreventClassActivation", function(ply)
-        return PreventWhenExecutedWithoutCrystal()
+hook.Add("TTTCPreventClassActivation", "TTTHActivationOnlyWithCrystal", function(ply)
+        return PreventWhenExecutedWithoutCrystal(ply)
 end)
