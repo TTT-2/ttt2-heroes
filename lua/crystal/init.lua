@@ -3,6 +3,7 @@ TTT2Crystal.AnyCrystals = TTT2Crystal.AnyCrystals or true
 util.AddNetworkString("TTT2Crystal")
 util.AddNetworkString("TTT2CrystalPlaceCrystal")
 util.AddNetworkString("TTT2ClientInitCrystal")
+util.AddNetworkString("TTT2ClientCVarChanged")
 
 local cvnm = "ttt2_classes"
 local cvnmh = "ttt2_heroes"
@@ -134,15 +135,11 @@ cvars.AddChangeCallback("ttt2_heroes", function(cvar, old, new)
 		if new == "0" then
 			DestroyAllCrystals()
 			ResetCrystals()
-
-			if TTTScoreboard then
-				TTTScoreboard.Logo = surface.GetTextureID("vgui/ttt/score_logo_2")
-			end
-		else
-			if TTTScoreboard then
-				TTTScoreboard.Logo = surface.GetTextureID("vgui/ttt/score_logo_heroes")
-			end
 		end
+
+		net.Start("TTT2ClientCVarChanged")
+		net.WriteBool(new == "0")
+		net.Broadcast()
 	end
 end)
 

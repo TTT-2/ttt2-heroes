@@ -6,6 +6,11 @@ local function PreventWhenExecutedWithoutCrystal(ply)
         return false
 end
 
+
+hook.Add("TTTCPreventClassActivation", "TTTHActivationOnlyWithCrystal", function(ply)
+        return PreventWhenExecutedWithoutCrystal(ply)
+end)
+
 if SERVER then        
         -- called on death / disconnect / distroy / ...
 	hook.Add("TTTHRemoveCrystal", "TTTHDisableAbility", function(ply) -- TODO doublicated since the new UpdateRole handling?
@@ -38,6 +43,22 @@ else
         hook.Add("TTTCPreventCharging", "TTTHCharingOnlyWithCrystal", function(ply)
                 return PreventWhenExecutedWithoutCrystal(ply)
         end)
+
+	hook.Add("TTTScoreboardColumns", "TTTCScoreboardClass", function(pnl)
+                --little timer to let the global bools update
+                timer.Simple(0.1, function() 
+                        if GetGlobalBool("ttt2_classes") and GetGlobalBool("ttt2_heroes") then
+                                if isfunction(pnl.GetColumns) then
+                                        for _, label in ipairs(pnl:GetColumns()) do
+                                                if label:GetText() == "Class" then
+                                                        label:SetText("Hero")
+                                                end
+                                        end
+                                end
+        
+                        end
+                end)
+	end)
 
         hook.Add("TTT2AddChange", "TTTHeroesChanges", function()
 		AddChange("TTTH v0.4", [[<ul>
@@ -81,7 +102,3 @@ else
 		</ul>]])
 	end)
 end
-
-hook.Add("TTTCPreventClassActivation", "TTTHActivationOnlyWithCrystal", function(ply)
-        return PreventWhenExecutedWithoutCrystal(ply)
-end)

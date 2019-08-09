@@ -50,3 +50,22 @@ net.Receive("TTT2Crystal", function()
 
 	chat.PlaySound()
 end)
+
+net.Receive("TTT2ClientCVarChanged", function()
+	local heroesActivated = not net.ReadBool()
+
+	if CLIENT then
+		GAMEMODE:ScoreboardCreate()
+		GAMEMODE:ScoreboardHide()
+	end
+
+	if heroesActivated then
+		if TTTScoreboard then
+			TTTScoreboard.Logo = surface.GetTextureID("vgui/ttt/score_logo_heroes")
+		end
+	else
+		if TTTScoreboard then
+			TTTScoreboard.Logo = surface.GetTextureID("vgui/ttt/score_logo_2")
+		end
+	end
+end)
