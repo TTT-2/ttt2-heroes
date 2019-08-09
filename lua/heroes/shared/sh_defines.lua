@@ -1,3 +1,4 @@
+TTTH = true
 
 if SERVER then
 
