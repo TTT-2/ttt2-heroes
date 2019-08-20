@@ -14,21 +14,21 @@ end)
 if SERVER then        
         -- called on death / disconnect / distroy / ...
 	hook.Add("TTTHRemoveCrystal", "TTTHDisableAbility", function(ply) -- TODO doublicated since the new UpdateRole handling?
-		if ply:IsHero() then
-			if ply:IsHeroActive() then
-				ply:HeroDeactivate()
+		if ply:HasClass() then
+			if ply:HasClassActive() then
+				ply:ClassDeactivate()
 
 				net.Start("TTTCDeactivateHero")
 				net.Send(ply)
 			end
 
-			ply:RemovePassiveHeroEquipment()
+			ply:RemovePassiveClassEquipment()
 		end
 	end)
 
 		hook.Add("TTTHPlaceCrystal", "TTTHPlaceCrystal", function(ply)
-			if ply:IsHero() then
-				ply:GivePassiveHeroEquipment()
+			if ply:HasClass() then
+				ply:GivePassiveClassEquipment()
 			end
         end)
         

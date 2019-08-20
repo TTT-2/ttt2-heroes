@@ -13,7 +13,7 @@ function PlaceCrystal(len, sender)
 
 	local ply = sender
 
-	if not IsValid(ply) or not ply:IsTerror() or not ply:IsHero() then return end
+	if not IsValid(ply) or not ply:IsTerror() or not ply:HasClass() then return end
 
 	if not ply:GetNWBool("CanSpawnCrystal") or IsValid(ply:GetNWEntity("Crystal", NULL)) or ply.PlaceCrystal then
 		net.Start("TTT2Crystal")
