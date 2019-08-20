@@ -18,7 +18,7 @@ if SERVER then
 			if ply:IsHeroActive() then
 				ply:HeroDeactivate()
 
-				net.Start("TTTHDeactivateHero")
+				net.Start("TTTCDeactivateHero")
 				net.Send(ply)
 			end
 
@@ -44,7 +44,7 @@ else
                 return PreventWhenExecutedWithoutCrystal(ply)
         end)
 
-	hook.Add("TTTScoreboardColumns", "TTTCScoreboardClass", function(pnl)
+	hook.Add("TTTScoreboardColumns", "TTTHScoreboardClass", function(pnl)
                 --little timer to let the global bools update
                 timer.Simple(0.1, function() 
                         if GetGlobalBool("ttt2_classes") and GetGlobalBool("ttt2_heroes") then
