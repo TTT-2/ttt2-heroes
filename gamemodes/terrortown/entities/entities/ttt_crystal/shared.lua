@@ -127,7 +127,7 @@ function ENT:OnTakeDamage(dmginfo)
 
 		self:Remove()
 
-		owner.oldHero = owner:GetCustomClass()
+		owner.oldClass = owner:GetCustomClass()
 
 		if SERVER then
 			owner:UpdateClass(nil)
@@ -158,7 +158,7 @@ function ENT:FakeDestroy()
 	self:Remove()
 
 	if IsValid(owner) then
-		owner.oldHero = owner:GetCustomClass()
+		owner.oldClass = owner:GetCustomClass()
 
 		if SERVER then
 			owner:UpdateClass(nil)

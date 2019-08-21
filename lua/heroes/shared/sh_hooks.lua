@@ -18,7 +18,7 @@ if SERVER then
 			if ply:HasClassActive() then
 				ply:ClassDeactivate()
 
-				net.Start("TTTCDeactivateHero")
+				net.Start("TTTCDeactivateClass")
 				net.Send(ply)
 			end
 
