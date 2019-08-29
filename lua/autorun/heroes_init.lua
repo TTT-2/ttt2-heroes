@@ -10,8 +10,8 @@ include("heroes/shared/sh_defines.lua")
 include("heroes/shared/sh_hooks.lua")
 
 if CLIENT then
-	hook.Add("TTT2Initialize", "ModifyTTTScoreboardLogo", function()
-		if TTTScoreboard and GetGlobalBool("ttt2_heroes") then
+	hook.Add("InitPostEntity", "ModifyTTTScoreboardLogo", function()
+                if TTTScoreboard and GetGlobalBool("ttt2_heroes") then
 			TTTScoreboard.Logo = surface.GetTextureID("vgui/ttt/score_logo_heroes")
                 end
         end)
