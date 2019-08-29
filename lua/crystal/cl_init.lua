@@ -7,6 +7,8 @@ end)
 hook.Add("TTTBeginRound", "TTT2CrystalAutomaticPlacement", function()
 	if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") or not GetConVar("ttt_crystal_auto"):GetBool() then return end
 
+	if not IsValid(LocalPlayer()) then return end
+
 	LocalPlayer():ConCommand("placecrystal")
 end)
 
