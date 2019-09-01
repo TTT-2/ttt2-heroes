@@ -1,18 +1,18 @@
 local function PreventWhenExecutedWithoutCrystal(ply)
-        if GetGlobalBool("ttt2_heroes") and not ply:HasCrystal() then
-                return true
-        end
+	if GetGlobalBool("ttt2_heroes") and not ply:HasCrystal() then
+		return true
+	end
 
-        return false
+	return false
 end
 
 
 hook.Add("TTTCPreventClassActivation", "TTTHActivationOnlyWithCrystal", function(ply)
-        return PreventWhenExecutedWithoutCrystal(ply)
+	return PreventWhenExecutedWithoutCrystal(ply)
 end)
 
 if SERVER then        
-        -- called on death / disconnect / distroy / ...
+	-- called on death / disconnect / distroy / ...
 	hook.Add("TTTHRemoveCrystal", "TTTHDisableAbility", function(ply) -- TODO doublicated since the new UpdateRole handling?
 		if ply:HasClass() then
 			if ply:HasClassActive() then
@@ -26,79 +26,94 @@ if SERVER then
 		end
 	end)
 
-		hook.Add("TTTHPlaceCrystal", "TTTHPlaceCrystal", function(ply)
-			if ply:HasClass() then
-				ply:GivePassiveClassEquipment()
-			end
-        end)
-        
-        hook.Add("TTTCPreventClassEquipment", "TTTHEquipmentOnlyWithCrystal", function(ply)
-                return PreventWhenExecutedWithoutCrystal(ply)
-        end)
-else
-        hook.Add("TTTCPreventClassAbortion", "TTTHAbortionOnlyWithCrystal", function(ply)
-                return PreventWhenExecutedWithoutCrystal(ply)
-        end)
-
-        hook.Add("TTTCPreventCharging", "TTTHCharingOnlyWithCrystal", function(ply)
-                return PreventWhenExecutedWithoutCrystal(ply)
-        end)
-
-	hook.Add("TTTScoreboardColumns", "TTTHScoreboardClass", function(pnl)
-                --little timer to let the global bools update
-                timer.Simple(0.1, function() 
-                        if GetGlobalBool("ttt2_classes") and GetGlobalBool("ttt2_heroes") then
-                                if isfunction(pnl.GetColumns) then
-                                        for _, label in ipairs(pnl:GetColumns()) do
-                                                if label:GetText() == "Class" then
-                                                        label:SetText("Hero")
-                                                end
-                                        end
-                                end
-        
-                        end
-                end)
+	hook.Add("TTTHPlaceCrystal", "TTTHPlaceCrystal", function(ply)
+		if ply:HasClass() then
+			ply:GivePassiveClassEquipment()
+		end
+	end)
+	
+	hook.Add("TTTCPreventClassEquipment", "TTTHEquipmentOnlyWithCrystal", function(ply)
+			return PreventWhenExecutedWithoutCrystal(ply)
 	end)
 
-        hook.Add("TTT2AddChange", "TTTHeroesChanges", function()
-		AddChange("TTTH v0.4", [[<ul>
-		<li>Hunter springt in Blickrichtung! (Ziele höher, um weiter zu springen)</li>
-		<li>Man kann nun zwischen 2 Helden wählen</li>
-		<li>Der Swift kann sich mit seiner Fähigkeit an einer Wand festhalten. Er rollt sich automatisch ab und man kann nun mit Waffen springen</li>
-		<li>Der Meditate wird halb transparent, wenn er aktiv ist</li>
-		<li>Der Dazzle sollte nun nur Spieler blenden, die ihn anschauen, wenn er die Fähigkeit nutzt</li>
-		<li>Wenn man eine Ability nutzt, die die Waffen kurzzeitig deaktiviert, dann bekommt man die Waffe danach in die Hand, die man vor der Fähigkeit auch in der Hand hatte</li>
-		<li>Der Frost wurde stiltechnisch verbessert und wird selbst nicht mehr geslowed</li>
-		<li>Der Chaos vertauscht nun auch [W] und [S]</li>
-		<li>Der Resistant macht einen Aktivierung<li>und Deaktivierungssound</li>
-		<li>Der Breach bekommt nun den Bulldozer, kann diesen aber nur einmal aktivieren</li>
-		<li>Der Conceal bekommt nun ein TSuitCase, wenn er Nicht-Zombie/-Inno Leichen removed</li>
-		<li>Vendetta gibt nun den Grund für das Nicht-Respawnen aus</li>
-		<li>Predator sollte gefixt sein</li>
-		<li>Der Kristall wird nun in der Farbe gefärbt, in der man den Spieler auf dem Scoreboard hat</li>
-		<li>Das Equipmentsystem wurde komplett neugeschrieben</li>
-		</ul>]])
+else
 
-		AddChange("TTTH v0.5", [[<ul>
-		<li>Das HUD wurde an die <b>neueste TTT2 Version</b> angepasst</li>
-		<li>Der Conceal wurde angepasst:
+	hook.Add("TTTCPreventClassAbortion", "TTTHAbortionOnlyWithCrystal", function(ply)
+			return PreventWhenExecutedWithoutCrystal(ply)
+	end)
+
+	hook.Add("TTTCPreventCharging", "TTTHCharingOnlyWithCrystal", function(ply)
+			return PreventWhenExecutedWithoutCrystal(ply)
+	end)
+
+	hook.Add("TTTScoreboardColumns", "TTTHScoreboardClass", function(pnl)
+		--little timer to let the global bools update
+		timer.Simple(0.1, function() 
+			if GetGlobalBool("ttt2_classes") and GetGlobalBool("ttt2_heroes") then
+				if isfunction(pnl.GetColumns) then
+					for _, label in ipairs(pnl:GetColumns()) do
+						if label:GetText() == "Class" then
+							label:SetText("Hero")
+						end
+					end
+				end
+
+			end
+		end)
+	end)
+
+	hook.Add("TTT2AddChange", "TTTHeroesChanges", function()
+		AddChange("TTT2 Heroes - v0.4", [[
 			<ul>
-				<li>Böse bekommen für Gute +10HP und +10MaxHP</li>
-				<li>Gute bekommen für Böse ein T-Suit-Case (Random T-Item)</li>
+				<li>Hunter jumps in line of sight! (aim higher to jump further)</li>
+				<li>One can chose between two heroes.</li>
+				<li>The swift can grip himselt at the wall with the use of his ability. He rolls off automatically and can use his weapon while doing so.</li>
+				<li>The meditate will be rendered semi transparent while using his ability.</li>
+				<li>The dazzle will only dazzle players that are looking in his direction.</li>
+				<li>A player will autoselect his weapon after using his ability.</li>
+				<li>The frost got improved and is no longer iinfluenced by the sphere.</li>
+				<li>The chaos now interchanges [W] and [S] too.</li>
+				<li>Ac-/detivating the ability of the resistant now plays a sound.</li>
+				<li>The breach recieves the bulldozer but can use this ability only once.</li>
+				<li>The conceil now receives a T-Suitcase when removing non zombie/innocent corpses.</li>
+				<li>Fixed problems with the predator</li>
+				<li>The crystal will be colored in the player role color, but only when the role is synced.</li>
+				<li>Rewrite of the equipment system</li>
 			</ul>
-		</li>
-		<li>Der Predator muss nun nicht mehr chargen</li>
-		<li>Breach (Bulldozer) wurde gefixt</li>
-		<li>Float gleitet nun immer passiv</li>
-		<li>Blink und Hunter bekommen keinen Fallschaden mehr</li>
-		<li>Nebula ist nun in seiner Smoke 50% schneller</li>
-		<li>Der Mirror spielt nun einen Aktivierungs- und Deaktivierungssound</li>
-		<li>Dazzle bekommt nun bei der Aktivierung der Fähigkeit einen Speedboost für 2s</li>
-		<li>Der Swift sprintet jetzt 25% schneller</li>
-		<li>Vendetta gefixt</li>
-		<li>Sounds beim Transformieren eines Spielers zum Zombie entfernt</li>
-		<li>Necromancer hat nun ein neues Icon um ihm vom TTT2 Infected besser zu unterscheiden</li>
-		<li>Der Zombie schreit jetzt zufällig zwischen 5 und 25 Sekunden. Der erste Schrei ist um 10 Sekunden verzögert</li>
-		</ul>]])
+		]])
+
+		AddChange("TTT2 Heroes - v0.5", [[
+			<ul>
+				<li>Using the HUD system of the newest TTT2 version</li>
+				<li>The conceal got edited:
+					<ul>
+						<li>Evil roles get for removing innocent bodies +10HP and +10MaxHP</li>
+						<li>Innocent roles receive a T-Suitcase for removing evil bodies</li>
+					</ul>
+				</li>
+				<li>Removed predator charging.</li>
+				<li>Fixing the breach.</li>
+				<li>the float ability is now a passive ability.</li>
+				<li>Removed falldamage of blink and hunter.</li>
+				<li>Increases walkspeed of nebula about 50% in his own smoke.</li>
+				<li>Added a de-/activation sound to the mirror.</li>
+				<li>The dazzle gets a 2s speedboost after activating his ability.</li>
+				<li>Increased the swift sprint speed about 25%.</li>
+				<li>Fixed vendetta.</li>
+				<li>Removed the soun dof the necrodefi.</li>
+				<li>Changed the necromancer roleicon.</li>
+				<li>Added random timed zombie sounds to the zombies.</li>
+			</ul>
+		]])
+
+		AddChange("TTT2 Heroes - v1.0", [[
+			<ul>
+				<li>Refactored TTTH to work on top of a newly patched TTTC.</li>
+				<li>Added status icons to some abilities.</li>
+				<li>Switched from jester to jackal to avoid confusion with the classic jester role.</li>
+				<li>Removed ulib dependency.</li>
+				<li>Hides now the heroes logo, when the heroes gamemode is disabled via convar.</li>
+			</ul>
+		]])
 	end)
 end
