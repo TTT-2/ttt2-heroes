@@ -52,7 +52,7 @@ end
 function ENT:UseOverride(activator)
 	local owner = self:GetOwner()
 
-	if IsValid(activator) and activator:IsTerror() and owner == activator and activator.crystaluses < 1 and activator:IsHero() then
+	if IsValid(activator) and activator:IsTerror() and owner == activator and activator.crystaluses < 1 and activator:HasClass() then
 		activator:SetNWBool("CanSpawnCrystal", true)
 		activator:SetNWEntity("Crystal", NULL)
 
@@ -80,7 +80,7 @@ function ENT:UseOverride(activator)
 			net.Start("TTT2Crystal")
 			net.WriteInt(7, 8)
 			net.Send(activator)
-		elseif not activator:IsHero() then
+		elseif not activator:HasClass() then
 			net.Start("TTT2Crystal")
 			net.WriteInt(9, 8)
 			net.Send(activator)
@@ -127,10 +127,10 @@ function ENT:OnTakeDamage(dmginfo)
 
 		self:Remove()
 
-		owner.oldHero = owner:GetHero()
+		owner.oldClass = owner:GetCustomClass()
 
 		if SERVER then
-			owner:UpdateHero(nil)
+			owner:UpdateClass(nil)
 
 			timer.Simple(0.01, function()
 				CrystalUpdate()
@@ -158,10 +158,10 @@ function ENT:FakeDestroy()
 	self:Remove()
 
 	if IsValid(owner) then
-		owner.oldHero = owner:GetHero()
+		owner.oldClass = owner:GetCustomClass()
 
 		if SERVER then
-			owner:UpdateHero(nil)
+			owner:UpdateClass(nil)
 		end
 	end
 

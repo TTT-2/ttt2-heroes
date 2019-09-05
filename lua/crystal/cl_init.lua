@@ -5,13 +5,15 @@ net.Receive("TTT2ClientInitCrystal", function()
 end)
 
 hook.Add("TTTBeginRound", "TTT2CrystalAutomaticPlacement", function()
-	if not GetGlobalBool("ttt2_heroes") or not GetConVar("ttt_crystal_auto"):GetBool() then return end
+	if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") or not GetConVar("ttt_crystal_auto"):GetBool() then return end
+
+	if not IsValid(LocalPlayer()) then return end
 
 	LocalPlayer():ConCommand("placecrystal")
 end)
 
 function LookUpCrystal()
-	if not GetGlobalBool("ttt2_heroes") then return end
+	if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") then return end
 
 	if GetRoundState() ~= ROUND_WAIT and LocalPlayer():IsTerror() then
 		net.Start("TTT2CrystalPlaceCrystal")
@@ -49,4 +51,23 @@ net.Receive("TTT2Crystal", function()
 	end
 
 	chat.PlaySound()
+end)
+
+net.Receive("TTT2ClientCVarChanged", function()
+	local heroesActivated = not net.ReadBool()
+
+	if CLIENT then
+		GAMEMODE:ScoreboardCreate()
+		GAMEMODE:ScoreboardHide()
+	end
+
+	if heroesActivated then
+		if TTTScoreboard then
+			TTTScoreboard.Logo = surface.GetTextureID("vgui/ttt/score_logo_heroes")
+		end
+	else
+		if TTTScoreboard then
+			TTTScoreboard.Logo = surface.GetTextureID("vgui/ttt/score_logo_2")
+		end
+	end
 end)

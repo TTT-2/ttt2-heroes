@@ -3,15 +3,17 @@ TTT2Crystal.AnyCrystals = TTT2Crystal.AnyCrystals or true
 util.AddNetworkString("TTT2Crystal")
 util.AddNetworkString("TTT2CrystalPlaceCrystal")
 util.AddNetworkString("TTT2ClientInitCrystal")
+util.AddNetworkString("TTT2ClientCVarChanged")
 
-local cvnm = "ttt2_heroes"
+local cvnm = "ttt2_classes"
+local cvnmh = "ttt2_heroes"
 
 function PlaceCrystal(len, sender)
-	if not GetConVar(cvnm):GetBool() then return end
+	if not GetConVar(cvnm):GetBool() or not GetConVar(cvnmh):GetBool() then return end
 
 	local ply = sender
 
-	if not IsValid(ply) or not ply:IsTerror() or not ply:IsHero() then return end
+	if not IsValid(ply) or not ply:IsTerror() or not ply:HasClass() then return end
 
 	if not ply:GetNWBool("CanSpawnCrystal") or IsValid(ply:GetNWEntity("Crystal", NULL)) or ply.PlaceCrystal then
 		net.Start("TTT2Crystal")
@@ -67,15 +69,8 @@ local function DestroyAllCrystals()
 	CrystalUpdate()
 end
 
-local function ResetHeroData(ply)
-	if ply:IsHero() then
-		ply:UpdateHero(nil)
-	end
-end
-hook.Add("PlayerDeath", "TTT2ResetHeroData", ResetHeroData)
-
 function CrystalUpdate()
-	if not TTT2Crystal.AnyCrystals or not GetConVar(cvnm):GetBool() then return end
+	if not TTT2Crystal.AnyCrystals or not GetConVar(cvnm):GetBool() or not GetConVar(cvnmh):GetBool() then return end
 
 	local rs = GetRoundState()
 
@@ -125,8 +120,6 @@ end
 hook.Add("TTTPrepareRound", "TTT2ResetCrystalValues", ResetCrystals)
 
 local function CrystalInit(ply)
-	if not GetConVar(cvnm):GetBool() then return end
-
 	net.Start("TTT2ClientInitCrystal")
 	net.Send(ply)
 
@@ -142,14 +135,19 @@ cvars.AddChangeCallback("ttt2_heroes", function(cvar, old, new)
 		if new == "0" then
 			DestroyAllCrystals()
 			ResetCrystals()
+		end
 
-			if TTTScoreboard then
-				TTTScoreboard.Logo = surface.GetTextureID("vgui/ttt/score_logo_2")
-			end
-		else
-			if TTTScoreboard then
-				TTTScoreboard.Logo = surface.GetTextureID("vgui/ttt/score_logo_heroes")
-			end
+		net.Start("TTT2ClientCVarChanged")
+		net.WriteBool(new == "0")
+		net.Broadcast()
+	end
+end)
+
+cvars.AddChangeCallback("ttt2_classes", function(cvar, old, new)
+	if old ~= new then
+		if new == "0" then
+			DestroyAllCrystals()
+			ResetCrystals()
 		end
 	end
 end)
