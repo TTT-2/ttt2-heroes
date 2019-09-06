@@ -80,7 +80,7 @@ else
 				<li>The crystal will be colored in the player role color, but only when the role is synced.</li>
 				<li>Rewrite of the equipment system</li>
 			</ul>
-		]])
+		]], os.time({year = 2019, month = 03, day = 02}))
 
 		AddChange("TTT2 Heroes - v0.5", [[
 			<ul>
@@ -104,7 +104,7 @@ else
 				<li>Changed the necromancer roleicon.</li>
 				<li>Added random timed zombie sounds to the zombies.</li>
 			</ul>
-		]])
+		]], os.time({year = 2019, month = 03, day = 18}))
 
 		AddChange("TTT2 Heroes - v1.0", [[
 			<ul>
@@ -114,6 +114,6 @@ else
 				<li>Removed ulib dependency.</li>
 				<li>Hides now the heroes logo, when the heroes gamemode is disabled via convar.</li>
 			</ul>
-		]])
+		]], os.time({year = 2019, month = 09, day = 05}))
 	end)
 end
