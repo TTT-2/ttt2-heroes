@@ -89,20 +89,25 @@ if SERVER then
 	-- is called if the role has been selected in the normal way of team setup
 	hook.Add("TTT2UpdateSubrole", "UpdateToSupervillainRole", function(ply, old, new)
 		if new == ROLE_SUPERVILLAIN then
-			ply:GiveItem("item_ttt_radar")
+			ply:GiveEquipmentWeapon("weapon_ttt_crystalknife")
+			ply:GiveEquipmentItem("item_ttt_radar")
+		elseif old == ROLE_SUPERVILLAIN then
+			ply:StripWeapon("weapon_ttt_crystalknife")
+			ply:RemoveEquipmentItem("item_ttt_radar")
 		end
 	end)
 
-	hook.Add("TTT2RolesLoaded", "AddCrystalKnifeToDefaultLoadout", function()
-		local wep = weapons.GetStored("weapon_ttt_crystalknife")
-		if wep then
-			wep.InLoadoutFor = wep.InLoadoutFor or {}
+	-- make sure that the supervillain always receives his radar
+	hook.Add("PlayerSpawn", "RespawnSupervillain", function(ply) -- called on player (re-)spawn
+		-- this is an ugly workaround, since on calling of the player respawn hook, the player can not yet receive items
+		timer.Simple(0.1, function()
+			if GetRoundState() ~= ROUND_ACTIVE then return end
+			if ply:GetSubRole() ~= ROLE_SUPERVILLAIN then return end
 
-			if not table.HasValue(wep.InLoadoutFor, ROLE_SUPERVILLAIN) then
-				table.insert(wep.InLoadoutFor, ROLE_SUPERVILLAIN)
-			end
-		end
-	end)
+			ply:GiveEquipmentWeapon("weapon_ttt_crystalknife")
+			ply:GiveEquipmentItem("item_ttt_radar")
+		end)
+    end)
 
 	-- disable this role if this mod is deactivated
 	hook.Add("TTT2RoleNotSelectable", "TTT2CrystalDisableSupervillain", function(roleData)
