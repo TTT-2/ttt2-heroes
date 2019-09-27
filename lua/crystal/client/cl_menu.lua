@@ -5,8 +5,8 @@ hook.Add("TTT2ModifySettingsList", "TTT2CrystalBindings", function(tbl)
 	heroesTbl.id = "heroes"
 	heroesTbl.getContent = function(slf, parent)
 		local dguiT = vgui.Create("DForm", parent)
-		dguiT:SetName("Crystal")
-		dguiT:CheckBox("Automatically try placing a Crystal", "ttt_crystal_auto")
+		dguiT:SetName(LANG.GetTranslation("ttt2_heroes_settings_crystal"))
+		dguiT:CheckBox(LANG.GetTranslation("ttt2_heroes_settings_autoplace"), "ttt_crystal_auto")
 
 		dguiT:Dock(TOP)
 	end

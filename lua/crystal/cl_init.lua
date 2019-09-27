@@ -26,24 +26,26 @@ net.Receive("TTT2Crystal", function()
 	local state = net.ReadInt(8)
 	local text
 
+	local GetTranslation = LANG.GetTranslation
+
 	if state == 1 then
-		text = "Du hast schon einen Kristall platziert!"
+		text = GetTranslation("ttt2_heroes_crystal_already_placed")
 	elseif state == 2 then
-		text = "Du musst beim Platzieren deines Kristalls auf dem Boden stehen!"
+		text = GetTranslation("ttt2_heroes_not_on_ground")
 	elseif state == 3 then
-		text = "Dein Kristall wurde erfolgreich platziert!"
+		text = GetTranslation("ttt2_heroes_crystal_placed")
 	elseif state == 4 then
-		text = "Du hast deinen Kristall erfolgreich aufgehoben!"
+		text = GetTranslation("ttt2_heroes_crystal_picked_up")
 	elseif state == 5 then
-		text = "Dein Kristall wurde zerstört!"
+		text = GetTranslation("ttt2_heroes_crystal_destoyed")
 	elseif state == 6 then
-		text = "Du kannst deine Fähigkeit nicht nutzen, weil du keinen Kristall platziert hast!"
+		text = GetTranslation("ttt2_heroes_ability_disabled")
 	elseif state == 7 then
-		text = "Du hast deinen Kristall schon einmal aufgehoben!"
+		text = GetTranslation("ttt2_heroes_crystal_already_picked_up")
 	elseif state == 8 then
-		text = "Alle Kristalle wurden zerstört!"
+		text = GetTranslation("ttt2_heroes_all_crystals_destroyed")
 	elseif state == 9 then
-		text = "Du kannst deinen Kristall nicht aufheben, da du keine Fähigkeit mehr hast!"
+		text = GetTranslation("ttt2_heroes_crystal_ability_pickup_disabled")
 	end
 
 	if text then
