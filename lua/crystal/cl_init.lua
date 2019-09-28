@@ -56,7 +56,7 @@ net.Receive("TTT2Crystal", function()
 end)
 
 net.Receive("TTT2ClientCVarChanged", function()
-	local heroesActivated = not net.ReadBool()
+	local heroesActivated = net.ReadBool()
 
 	if CLIENT then
 		GAMEMODE:ScoreboardCreate()

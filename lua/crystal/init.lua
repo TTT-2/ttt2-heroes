@@ -138,7 +138,7 @@ cvars.AddChangeCallback("ttt2_heroes", function(cvar, old, new)
 		end
 
 		net.Start("TTT2ClientCVarChanged")
-		net.WriteBool(new == "0")
+		net.WriteBool(new == "1" and GetGlobalBool("ttt2_classes"))
 		net.Broadcast()
 	end
 end)
@@ -149,5 +149,9 @@ cvars.AddChangeCallback("ttt2_classes", function(cvar, old, new)
 			DestroyAllCrystals()
 			ResetCrystals()
 		end
+
+		net.Start("TTT2ClientCVarChanged")
+		net.WriteBool(GetGlobalBool("ttt2_heroes") and new == "1")
+		net.Broadcast()
 	end
 end)
