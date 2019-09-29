@@ -80,8 +80,8 @@ hook.Add("TTT2FinishedLoading", "SupervillainInitT", function()
 		LANG.AddToLanguage("Deutsch", "ttt2_desc_" .. SUPERVILLAIN.name, [[Der Superschurke ist ein Verräter (der mit den anderen Verräter-Rollen zusammenarbeitet). Es ist sein Ziel alle anderen Rollen (außer Verräter-Rollen) zu töten. Er kann die Crystals seiner Feinde zerstören um Credits zu verdienen und ihnen die Heldenfähigkeiten zu nehmen.]])
 	
 		-- other role language elements
-		LANG.AddToLanguage("English", credit_h_all, "You received credits: {num}!")
-		LANG.AddToLanguage("Deutsch", credit_h_all, "Du bekamst Credits: {num}!")
+		LANG.AddToLanguage("English", "credit_h_all", "You have been awarded {num} equipment credit(s) by destroying a crystal.")
+		LANG.AddToLanguage("Deutsch", "credit_h_all", "Dir wurde(n) {num} Ausrüstungs-Credit(s) für die Zerstörung eines Kristalles gegeben.")
 
 	end
 end)
