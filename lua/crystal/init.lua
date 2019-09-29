@@ -102,7 +102,7 @@ hook.Add("TTTBeginRound", "TTT2CrystalSync", CrystalUpdate)
 hook.Add("PlayerDisconnected", "TTT2CrystalSync", CrystalUpdate)
 
 function GiveCrystalCredits(ply, crystal)
-	LANG.Msg(ply, "credit_h_all", {num = 1}) -- TODO localization
+	LANG.Msg(ply, "credit_h_all", {num = 1})
 
 	ply:AddCredits(1)
 end

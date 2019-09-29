@@ -64,50 +64,40 @@ end)
 -- if sync of roles has finished
 hook.Add("TTT2FinishedLoading", "SupervillainInitT", function()
 	if CLIENT then
-		-- setup here is not necessary but if you want to access the role data, you need to start here
-		-- setup basic translation !
+		-- Role specific language elements
 		LANG.AddToLanguage("English", SUPERVILLAIN.name, "Supervillain")
-		LANG.AddToLanguage("English", "info_popup_" .. SUPERVILLAIN.name, [[You are a Supervillain! Try to destroy some Crystals!]])
+		LANG.AddToLanguage("English", "info_popup_" .. SUPERVILLAIN.name, [[You are a Supervillain! Try to destroy some Crystals with your knife to earn yourself some credits! Removing Crystals also removes the hero ability of the owner.]])
 		LANG.AddToLanguage("English", "body_found_" .. SUPERVILLAIN.abbr, "They were a Supervillain!")
 		LANG.AddToLanguage("English", "search_role_" .. SUPERVILLAIN.abbr, "This person was a Supervillain!")
 		LANG.AddToLanguage("English", "target_" .. SUPERVILLAIN.name, "Supervillain")
-		LANG.AddToLanguage("English", "ttt2_desc_" .. SUPERVILLAIN.name, [[The Supervillain is a Traitor (who works together with the other traitors) and the goal is to kill all other roles except the other traitor roles ^^ The Supervillain is able to destroy the crystals of his enemies.]])
+		LANG.AddToLanguage("English", "ttt2_desc_" .. SUPERVILLAIN.name, [[The Supervillain is a Traitor (who works together with the other traitors)! The goal is to kill all other roles except the other traitor roles. The Supervillain is able to destroy the crystals of his enemies to get credits and remove their hero abilities.]])
 
-		---------------------------------
+		LANG.AddToLanguage("Deutsch", SUPERVILLAIN.name, "Superschurke")
+		LANG.AddToLanguage("Deutsch", "info_popup_" .. SUPERVILLAIN.name, [[Du bist ein Superschurke! Versuche ein paar Kristalle mit deinem Messter zu zerstören, um Credits zu verdienen! Das Entfernen der Kristalle entfernt auch die Heldenfähigkeit des Besitzers.]])
+		LANG.AddToLanguage("Deutsch", "body_found_" .. SUPERVILLAIN.abbr, "Er war ein Superschurke.")
+		LANG.AddToLanguage("Deutsch", "search_role_" .. SUPERVILLAIN.abbr, "Diese Person war ein Superschurke!")
+		LANG.AddToLanguage("Deutsch", "target_" .. SUPERVILLAIN.name, "Superschurke")
+		LANG.AddToLanguage("Deutsch", "ttt2_desc_" .. SUPERVILLAIN.name, [[Der Superschurke ist ein Verräter (der mit den anderen Verräter-Rollen zusammenarbeitet). Es ist sein Ziel alle anderen Rollen (außer Verräter-Rollen) zu töten. Er kann die Crystals seiner Feinde zerstören um Credits zu verdienen und ihnen die Heldenfähigkeiten zu nehmen.]])
+	
+		-- other role language elements
+		LANG.AddToLanguage("English", credit_h_all, "You received credits: {num}!")
+		LANG.AddToLanguage("Deutsch", credit_h_all, "Du bekamst Credits: {num}!")
 
-		-- maybe this language as well...
-		LANG.AddToLanguage("Deutsch", SUPERVILLAIN.name, "Supervillain")
-		LANG.AddToLanguage("Deutsch", "info_popup_" .. SUPERVILLAIN.name, [[Du bist ein Supervillain! Versuche ein paar Crystals zu zerstören!]])
-		LANG.AddToLanguage("Deutsch", "body_found_" .. SUPERVILLAIN.abbr, "Er war ein Supervillain...")
-		LANG.AddToLanguage("Deutsch", "search_role_" .. SUPERVILLAIN.abbr, "Diese Person war ein Supervillain!")
-		LANG.AddToLanguage("Deutsch", "target_" .. SUPERVILLAIN.name, "Supervillain")
-		LANG.AddToLanguage("Deutsch", "ttt2_desc_" .. SUPERVILLAIN.name, [[Der Supervillain ist ein Verräter (der mit den anderen Verräter-Rollen zusammenarbeitet) und dessen Ziel es ist, alle anderen Rollen (außer Verräter-Rollen) zu töten ^^ Er kann die Crystals seiner Feinde zerstören.]])
 	end
 end)
 
 if SERVER then
-	-- is called if the role has been selected in the normal way of team setup
-	hook.Add("TTT2UpdateSubrole", "UpdateToSupervillainRole", function(ply, old, new)
-		if new == ROLE_SUPERVILLAIN then
-			ply:GiveEquipmentWeapon("weapon_ttt_crystalknife")
-			ply:GiveEquipmentItem("item_ttt_radar")
-		elseif old == ROLE_SUPERVILLAIN then
-			ply:StripWeapon("weapon_ttt_crystalknife")
-			ply:RemoveEquipmentItem("item_ttt_radar")
-		end
-	end)
+	-- Give Loadout on respawn and rolechange	
+	function ROLE:GiveRoleLoadout(ply, isRoleChange)
+		ply:GiveEquipmentWeapon("weapon_ttt_crystalknife")
+		ply:GiveEquipmentItem("item_ttt_radar")
+	end
 
-	-- make sure that the supervillain always receives his radar
-	hook.Add("PlayerSpawn", "RespawnSupervillain", function(ply) -- called on player (re-)spawn
-		-- this is an ugly workaround, since on calling of the player respawn hook, the player can not yet receive items
-		timer.Simple(0.1, function()
-			if GetRoundState() ~= ROUND_ACTIVE then return end
-			if ply:GetSubRole() ~= ROLE_SUPERVILLAIN then return end
-
-			ply:GiveEquipmentWeapon("weapon_ttt_crystalknife")
-			ply:GiveEquipmentItem("item_ttt_radar")
-		end)
-    end)
+	-- Remove Loadout on death and rolechange
+	function ROLE:RemoveRoleLoadout(ply, isRoleChange)
+		ply:StripWeapon("weapon_ttt_crystalknife")
+		ply:RemoveEquipmentItem("item_ttt_radar")
+	end
 
 	-- disable this role if this mod is deactivated
 	hook.Add("TTT2RoleNotSelectable", "TTT2CrystalDisableSupervillain", function(roleData)
