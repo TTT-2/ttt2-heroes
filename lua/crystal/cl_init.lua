@@ -24,19 +24,15 @@ function AutoPlaceCrystal()
 
 	if not IsValid(client) then return end
 
-	GetTranslation = GetTranslation or LANG.GetTranslation
-
-	local text = GetTranslation("ttt2_heroes_crystal_auto_placed")
-	chat.AddText("[TTT2] Heroes: ", COLOR_WHITE, text)
-
-	client:ConCommand("placecrystal")
+	LookUpCrystal(true)
 end
 
-function LookUpCrystal()
+function LookUpCrystal(autoplace)
 	if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") then return end
 
 	if GetRoundState() ~= ROUND_WAIT and LocalPlayer():IsTerror() then
 		net.Start("TTT2CrystalPlaceCrystal")
+		net.WriteBool(autoplace or false)
 		net.SendToServer()
 	end
 end
@@ -48,7 +44,9 @@ net.Receive("TTT2Crystal", function()
 
 	GetTranslation = GetTranslation or LANG.GetTranslation
 
-	if state == 1 then
+	if state == 0 then
+		text = GetTranslation("ttt2_heroes_crystal_auto_placed")
+	elseif state == 1 then
 		text = GetTranslation("ttt2_heroes_crystal_already_placed")
 	elseif state == 2 then
 		text = GetTranslation("ttt2_heroes_not_on_ground")

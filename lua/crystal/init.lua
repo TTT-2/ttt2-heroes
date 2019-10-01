@@ -9,11 +9,19 @@ local cvnm = "ttt2_classes"
 local cvnmh = "ttt2_heroes"
 
 function PlaceCrystal(len, sender)
+	local isAutoplace = net.ReadBool()
+
 	if not GetConVar(cvnm):GetBool() or not GetConVar(cvnmh):GetBool() then return end
 
 	local ply = sender
 
 	if not IsValid(ply) or not ply:IsTerror() or not ply:HasClass() then return end
+
+	if isAutoplace then
+		net.Start("TTT2Crystal")
+		net.WriteInt(0, 8)
+		net.Send(ply)
+	end
 
 	if not ply:GetNWBool("CanSpawnCrystal") or IsValid(ply:GetNWEntity("Crystal", NULL)) or ply.PlaceCrystal then
 		net.Start("TTT2Crystal")
