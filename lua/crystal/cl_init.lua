@@ -1,16 +1,36 @@
-CreateConVar("ttt_crystal_auto", "1", {FCVAR_ARCHIVE}, "Soll das Crystal automatisch plaziert werden?")
+local GetTranslation
+
+CreateConVar("ttt_crystal_auto", "1", {FCVAR_ARCHIVE}, "Should the crystal be autoplaced?")
 
 net.Receive("TTT2ClientInitCrystal", function()
 	include("crystal/client/cl_menu.lua")
 end)
 
-hook.Add("TTTBeginRound", "TTT2CrystalAutomaticPlacement", function()
-	if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") or not GetConVar("ttt_crystal_auto"):GetBool() then return end
-
-	if not IsValid(LocalPlayer()) then return end
-
-	LocalPlayer():ConCommand("placecrystal")
+-- autoplace crystal on round begin
+hook.Add("TTTBeginRound", "TTT2CrystalAutomaticPlacementRoundBegin", function()
+	AutoPlaceCrystal()
 end)
+
+-- autoplace crystal on class select
+hook.Add("TTTCUpdateClass", "TTT2CrystalAutomaticPlacementClassSelect", function()
+	AutoPlaceCrystal()
+end)
+
+function AutoPlaceCrystal()
+	if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") then return end
+	if not GetConVar("ttt_crystal_auto"):GetBool() then return end
+
+	local client = LocalPlayer()
+
+	if not IsValid(client) then return end
+
+	GetTranslation = GetTranslation or LANG.GetTranslation
+
+	local text = GetTranslation("ttt2_heroes_crystal_auto_placed")
+	chat.AddText("[TTT2] Heroes: ", COLOR_WHITE, text)
+
+	client:ConCommand("placecrystal")
+end
 
 function LookUpCrystal()
 	if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") then return end
@@ -26,7 +46,7 @@ net.Receive("TTT2Crystal", function()
 	local state = net.ReadInt(8)
 	local text
 
-	local GetTranslation = LANG.GetTranslation
+	GetTranslation = GetTranslation or LANG.GetTranslation
 
 	if state == 1 then
 		text = GetTranslation("ttt2_heroes_crystal_already_placed")

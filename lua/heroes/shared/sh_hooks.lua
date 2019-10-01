@@ -12,7 +12,7 @@ hook.Add("TTTCPreventClassActivation", "TTTHActivationOnlyWithCrystal", function
 end)
 
 if SERVER then        
-	-- called on death / disconnect / distroy / ...
+	-- called on death / disconnect / destroy / ...
 	hook.Add("TTTHRemoveCrystal", "TTTHDisableAbility", function(ply) -- TODO doublicated since the new UpdateRole handling?
 		if ply:HasClass() then
 			if ply:HasClassActive() then

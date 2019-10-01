@@ -26,6 +26,7 @@ if CLIENT then
 		LANG.AddToLanguage("English", "ttt2_heroes_crystal_already_picked_up", "You can pickup your crystal only once!")
 		LANG.AddToLanguage("English", "ttt2_heroes_all_crystals_destroyed", "All crystals have been destroyed!")
 		LANG.AddToLanguage("English", "ttt2_heroes_crystal_ability_pickup_disabled", "You can't pickup your crystal since you have no ability!")
+		LANG.AddToLanguage("English", "ttt2_heroes_crystal_auto_placed", "Attempting to auto place your crystal. You can disable this feature in the local heroes settings.")
 
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_crystal_already_placed", "Du hast schon einen Kristall platziert!")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_not_on_ground", "Du musst beim Platzieren deines Kristalls auf dem Boden stehen!")
@@ -36,6 +37,7 @@ if CLIENT then
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_crystal_already_picked_up", "Du hast deinen Kristall schon einmal aufgehoben!")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_all_crystals_destroyed", "Alle Kristalle wurden zerstört!")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_crystal_ability_pickup_disabled", "Du kannst deinen Kristall nicht aufheben, da du keine Fähigkeit mehr hast!")
+		LANG.AddToLanguage("Deutsch", "ttt2_heroes_crystal_auto_placed", "Versuche deinen Kristall automatisch zu platzieren. Du kannst dieses Feature in den lokalen Heroes Einstellung deaktivieren.")
 
 
 		LANG.AddToLanguage("English", "ttt2_heroes_bind_place", "Place Crystal")
@@ -44,8 +46,8 @@ if CLIENT then
 		LANG.AddToLanguage("English", "ttt2_heroes_settings_crystal", "Crystal")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_settings_crystal", "Kristall")
 
-		LANG.AddToLanguage("English", "ttt2_heroes_settings_autoplace", "Automatically try placing a Crystal")
-		LANG.AddToLanguage("Deutsch", "ttt2_heroes_settings_autoplace", "Platziere den Kristall automatisch")
+		LANG.AddToLanguage("English", "ttt2_heroes_settings_autoplace", "Automatically try placing a Crystal.")
+		LANG.AddToLanguage("Deutsch", "ttt2_heroes_settings_autoplace", "Versuche den Kristall automatisch zu platzieren.")
 	end)
 	
 	hook.Add("Initialize", "TTT2HeroesKeyBinds", function()
