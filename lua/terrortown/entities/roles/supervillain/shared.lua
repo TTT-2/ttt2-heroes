@@ -8,8 +8,6 @@ ROLE.color = Color(222, 68, 0, 255) -- ...
 ROLE.dkcolor = Color(138, 43, 0, 255) -- ...
 ROLE.bgcolor = Color(0, 150, 93, 255) -- ...
 ROLE.abbr = "svil" -- abbreviation
-ROLE.defaultTeam = TEAM_TRAITOR -- the team name: roles with same team name are working together
-ROLE.defaultEquipment = SPECIAL_EQUIPMENT -- here you can set up your own default equipment
 ROLE.surviveBonus = 0.5 -- bonus multiplier for every survive while another player was killed
 ROLE.scoreKillsMultiplier = 5 -- multiplier for kill of player of another team
 ROLE.scoreTeamKillsMultiplier = -16 -- multiplier for teamkill
@@ -40,29 +38,24 @@ if SERVER then
 	end
 end
 
--- important to add roles with this function,
--- because it does more than just access the array ! e.g. updating other arrays
-ROLE.conVarData = {
-	pct = 0.15, -- necessary: percentage of getting this role selected (per player)
-	maximum = 1, -- maximum amount of roles in a round
-	minPlayers = 6, -- minimum amount of players until this role is able to get selected
-	credits = 0, -- the starting credits of a specific role
-	togglable = true, -- option to toggle a role for a client if possible (F1 menu)
-	random = 50,
-	shopFallback = SHOP_FALLBACK_TRAITOR
-}
+function ROLE:PreInitialize()
+	self.defaultTeam = TEAM_TRAITOR
+	self.defaultEquipment = SPECIAL_EQUIPMENT
 
--- now link this subrole with its baserole
-hook.Add("TTT2BaseRoleInit", "TTT2ConBRTWithHrole", function()
-	SUPERVILLAIN:SetBaseRole(ROLE_TRAITOR)
-end)
+	self.conVarData = {
+		pct = 0.15, -- necessary: percentage of getting this role selected (per player)
+		maximum = 1, -- maximum amount of roles in a round
+		minPlayers = 6, -- minimum amount of players until this role is able to get selected
+		credits = 0, -- the starting credits of a specific role
+		togglable = true, -- option to toggle a role for a client if possible (F1 menu)
+		random = 50,
+		shopFallback = SHOP_FALLBACK_TRAITOR
+	}
+end
 
-hook.Add("TTT2RolesLoaded", "AddSupervillainTeam", function()
-	SUPERVILLAIN.defaultTeam = TEAM_TRAITOR
-end)
+function ROLE:Initialize()
+	roles.SetBaseRole(self, ROLE_TRAITOR)
 
--- if sync of roles has finished
-hook.Add("TTT2FinishedLoading", "SupervillainInitT", function()
 	if CLIENT then
 		-- Role specific language elements
 		LANG.AddToLanguage("English", SUPERVILLAIN.name, "Supervillain")
@@ -82,9 +75,8 @@ hook.Add("TTT2FinishedLoading", "SupervillainInitT", function()
 		-- other role language elements
 		LANG.AddToLanguage("English", "credit_h_all", "You have been awarded {num} equipment credit(s) by destroying a crystal.")
 		LANG.AddToLanguage("Deutsch", "credit_h_all", "Dir wurde(n) {num} Ausrüstungs-Credit(s) für die Zerstörung eines Kristalles gegeben.")
-
 	end
-end)
+end
 
 if SERVER then
 	-- Give Loadout on respawn and rolechange	
