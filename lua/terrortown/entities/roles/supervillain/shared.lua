@@ -4,41 +4,16 @@ end
 
 ROLE.Base = "ttt_role_base"
 
-ROLE.color = Color(222, 68, 0, 255) -- ...
-ROLE.dkcolor = Color(138, 43, 0, 255) -- ...
-ROLE.bgcolor = Color(0, 150, 93, 255) -- ...
-ROLE.abbr = "svil" -- abbreviation
-ROLE.surviveBonus = 0.5 -- bonus multiplier for every survive while another player was killed
-ROLE.scoreKillsMultiplier = 5 -- multiplier for kill of player of another team
-ROLE.scoreTeamKillsMultiplier = -16 -- multiplier for teamkill
-
-if SERVER then
-	ROLE.CustomRadar = function(ply) -- Hero Radar function
-		if TTT2Crystal.AnyCrystals then
-			local targets = {}
-			local scan_ents = ents.FindByClass("ttt_crystal")
-
-			for _, t in ipairs(scan_ents) do
-				local pos = t:LocalToWorld(t:OBBCenter())
-
-				pos.x = math.Round(pos.x)
-				pos.y = math.Round(pos.y)
-				pos.z = math.Round(pos.z)
-
-				local owner = t:GetOwner() or t.Owner
-				if owner ~= ply and not owner:HasTeam(TEAM_TRAITOR) then
-					table.insert(targets, {subrole = -1, pos = pos})
-				end
-			end
-
-			return targets
-		else
-			return false
-		end
-	end
-end
-
 function ROLE:PreInitialize()
+	self.color = Color(222, 68, 0, 255)
+	self.dkcolor = Color(138, 43, 0, 255)
+	self.bgcolor = Color(0, 150, 93, 255)
+
+	self.abbr = "svil"
+	self.surviveBonus = 0.5
+	self.scoreKillsMultiplier = 5
+	self.scoreTeamKillsMultiplier = -16
+
 	self.defaultTeam = TEAM_TRAITOR
 	self.defaultEquipment = SPECIAL_EQUIPMENT
 
@@ -79,6 +54,31 @@ function ROLE:Initialize()
 end
 
 if SERVER then
+	-- give the supervillain his special crystal radar
+	ROLE.CustomRadar = function(ply)
+		if TTT2Crystal.AnyCrystals then
+			local targets = {}
+			local scan_ents = ents.FindByClass("ttt_crystal")
+
+			for _, t in ipairs(scan_ents) do
+				local pos = t:LocalToWorld(t:OBBCenter())
+
+				pos.x = math.Round(pos.x)
+				pos.y = math.Round(pos.y)
+				pos.z = math.Round(pos.z)
+
+				local owner = t:GetOwner() or t.Owner
+				if owner ~= ply and not owner:HasTeam(TEAM_TRAITOR) then
+					table.insert(targets, {subrole = -1, pos = pos})
+				end
+			end
+
+			return targets
+		else
+			return false
+		end
+	end
+
 	-- Give Loadout on respawn and rolechange	
 	function ROLE:GiveRoleLoadout(ply, isRoleChange)
 		ply:GiveEquipmentWeapon("weapon_ttt_crystalknife")
