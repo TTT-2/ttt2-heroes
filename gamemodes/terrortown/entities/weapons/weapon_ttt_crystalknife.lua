@@ -48,7 +48,7 @@ function SWEP:PrimaryAttack()
 	self.Owner:LagCompensation(true)
 
 	local spos = self.Owner:GetShootPos()
-	local sdest = spos + self.Owner:GetAimVector() * 70
+	local sdest = spos + self.Owner:GetAimVector() * 100
 
 	local kmins = Vector(1, 1, 1) * -10
 	local kmaxs = Vector(1, 1, 1) * 10
@@ -106,31 +106,5 @@ end
 function SWEP:OnRemove()
 	if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
 		RunConsoleCommand("lastinv")
-	end
-end
-
-if CLIENT then
-	function SWEP:DrawHUD()
-		local tr = self.Owner:GetEyeTrace(MASK_SHOT)
-
-		if tr.HitNonWorld and IsValid(tr.Entity) and tr.Entity:GetClass() == "ttt_crystal" and not tr.Entity:GetOwner():HasTeam(TEAM_TRAITOR) then
-			local x = ScrW() * 0.5
-			local y = ScrH() * 0.5
-
-			surface.SetDrawColor(255, 0, 0, 255)
-
-			local outer = 20
-			local inner = 10
-
-			surface.DrawLine(x - outer, y - outer, x - inner, y - inner)
-			surface.DrawLine(x + outer, y + outer, x + inner, y + inner)
-
-			surface.DrawLine(x - outer, y + outer, x - inner, y + inner)
-			surface.DrawLine(x + outer, y - outer, x + inner, y - inner)
-
-			draw.SimpleText("DESTROY CRYSTAL", "TabLarge", x, y - 30, COLOR_RED, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
-		end
-
-		return self.BaseClass.DrawHUD(self)
 	end
 end

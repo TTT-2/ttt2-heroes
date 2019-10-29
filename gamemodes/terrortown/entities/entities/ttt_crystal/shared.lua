@@ -196,20 +196,53 @@ hook.Add("PlayerDisconnected", "TTT2CrystalDestroy", function(ply)
 end)
 
 if CLIENT then
-	hook.Add("HUDDrawTargetID", "DrawCrystal", function()
+	local TryT
+	local crystalMaterial = ("materials/vgui/ttt/icon_diamond.vmt")
+
+	-- target ID
+	hook.Add("TTTRenderEntityInfo", "DrawCrystalTargetID", function(data, params)
 		local client = LocalPlayer()
-		local e = client:GetEyeTrace().Entity
 
-		if IsValid(e) and IsValid(e:GetOwner()) and e:GetClass() == "ttt_crystal" and (e:GetOwner() == client or client.GetSubRole and (client:GetSubRole() == ROLE_SUPERVILLAIN or client:GetSubRole() == ROLE_SIDEKICK)) then
-			local owner = e:GetOwner():Nick()
+		-- has to be a valid crystal
+		if not data.ent:GetOwner() or data.ent:GetClass() ~= "ttt_crystal" then return end
+		if data.distance > 100 then return end
 
-			if string.EndsWith(owner, "s") or string.EndsWith(owner, "x") or string.EndsWith(owner, "z") or string.EndsWith(owner, "ß") then
-				draw.SimpleText(e:GetOwner():Nick() .. "' Crystal", "TargetID", ScrW() * 0.5 + 1, ScrH() * 0.5 + 41, COLOR_BLACK, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-				draw.SimpleText(e:GetOwner():Nick() .. "' Crystal", "TargetID", ScrW() * 0.5, ScrH() * 0.5 + 40, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-			else
-				draw.SimpleText(e:GetOwner():Nick() .. "'s Crystal", "TargetID", ScrW() * 0.5 + 1, ScrH() * 0.5 + 41, COLOR_BLACK, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-				draw.SimpleText(e:GetOwner():Nick() .. "'s Crystal", "TargetID", ScrW() * 0.5, ScrH() * 0.5 + 40, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-			end
+		TryT = TryT or LANG.TryTranslation
+
+		params.drawInfo = true
+		params.displayInfo.title.text = TryT("ttt2_heroes_entity_crystal")
+
+		params.drawOutline = true
+		params.outlineColor = client:GetRoleColor()
+
+		if data.ent:GetOwner() == client then
+			params.displayInfo.key = input.GetKeyCode(input.LookupBinding("+use"))
+			params.displayInfo.subtitle.text = TryT("target_pickup")
+
+			params.displayInfo.desc[#params.displayInfo.desc + 1] = {
+				text = TryT("ttt2_heroes_entity_crystal_owner_self")
+			}
+		elseif client:GetSubRole() == ROLE_SUPERVILLAIN or client:GetSubRole() == ROLE_SIDEKICK then
+			params.displayInfo.icon.material = crystalMaterial
+			params.displayInfo.subtitle.text = TryT("ttt2_heroes_entity_crystal_knife")
+
+			params.displayInfo.desc[#params.displayInfo.desc + 1] = {
+				text = TryT("ttt2_heroes_entity_crystal_owner") .. data.ent:GetOwner():Nick()
+			}
+		else
+			params.displayInfo.icon.material = crystalMaterial
+			params.displayInfo.subtitle.text = TryT("ttt2_heroes_entity_crystal_cant_interact")
+
+			params.displayInfo.desc[#params.displayInfo.desc + 1] = {
+				text = TryT("ttt2_heroes_entity_crystal_owner_unknown")
+			}
+		end
+
+		if data.ent:GetOwner():GetTeam() ~= client:GetTeam() and client:GetActiveWeapon():GetClass() == "weapon_ttt_crystalknife" then
+			params.displayInfo.desc[#params.displayInfo.desc + 1] = {
+				text = TryT("ttt2_heroes_entity_crystal_destroy"),
+				color = SUPERVILLAIN.color
+			}
 		end
 	end)
 end
