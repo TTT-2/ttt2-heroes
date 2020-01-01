@@ -197,7 +197,7 @@ end)
 
 if CLIENT then
 	local TryT
-	local crystalMaterial = ("materials/vgui/ttt/icon_diamond.vmt")
+	local crystalMaterial = Material("vgui/ttt/icon_diamond")
 
 	-- target ID
 	hook.Add("TTTRenderEntityInfo", "DrawCrystalTargetID", function(data, params)
@@ -223,14 +223,20 @@ if CLIENT then
 				text = TryT("ttt2_heroes_entity_crystal_owner_self")
 			}
 		elseif client:GetSubRole() == ROLE_SUPERVILLAIN or client:GetSubRole() == ROLE_SIDEKICK then
-			params.displayInfo.icon.material = crystalMaterial
+			params.displayInfo.icon[#params.displayInfo.icon + 1] = {
+				material = crystalMaterial,
+				color = COLOR_WHITE,
+			}
 			params.displayInfo.subtitle.text = TryT("ttt2_heroes_entity_crystal_knife")
 
 			params.displayInfo.desc[#params.displayInfo.desc + 1] = {
 				text = TryT("ttt2_heroes_entity_crystal_owner") .. data.ent:GetOwner():Nick()
 			}
 		else
-			params.displayInfo.icon.material = crystalMaterial
+			params.displayInfo.icon[#params.displayInfo.icon + 1] = {
+				material = crystalMaterial,
+				color = COLOR_WHITE,
+			}
 			params.displayInfo.subtitle.text = TryT("ttt2_heroes_entity_crystal_cant_interact")
 
 			params.displayInfo.desc[#params.displayInfo.desc + 1] = {
