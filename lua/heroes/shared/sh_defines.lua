@@ -2,7 +2,7 @@ TTTH = true
 
 if SERVER then
 	local ttt2_heroes = CreateConVar("ttt2_heroes", "1", {FCVAR_NOTIFY, FCVAR_ARCHIVE})
-	
+
 	-- ConVar syncing
 	hook.Add("TTT2SyncGlobals", "AddHeroesGlobal", function()
 		SetGlobalBool(ttt2_heroes:GetName(), ttt2_heroes:GetBool())
@@ -13,13 +13,13 @@ if SERVER then
 	end, "TTT2HeroesCVSyncingToggled")
 
 	-- ConVar Replicating
-hook.Add('TTTUlxInitCustomCVar', 'TTTHeroesInitRWCVar', function(name)
-	ULib.replicatedWritableCvar("ttt2_heroes", "rep_ttt2_heroes", GetConVar("ttt2_heroes"):GetBool(), true, true, "xgui_gmsettings")
-end)
+	hook.Add("TTTUlxInitCustomCVar", "TTTHeroesInitRWCVar", function(name)
+		ULib.replicatedWritableCvar("ttt2_heroes", "rep_ttt2_heroes", GetConVar("ttt2_heroes"):GetBool(), true, true, "xgui_gmsettings")
+	end)
 end
 
 if CLIENT then
-	hook.Add('TTTUlxModifyAddonSettings', 'TTTHeroesModifySettings', function(name)
+	hook.Add("TTTUlxModifyAddonSettings", "TTTHeroesModifySettings", function(name)
 		local clspnl = xlib.makelistlayout{w = 415, h = 318, parent = xgui.null}
 
 		local clsclp = vgui.Create("DCollapsibleCategory", clspnl)
@@ -36,7 +36,7 @@ if CLIENT then
 		clslst:AddItem(clslim)
 		xlib.makelabel{x = 0, y = 20, w = 415, wordwrap = true, label = "Disabling Heroes only disables the hero functionality, not the classes itself. You have to disable TTT2 Classes to play without classes alltogether.", parent = clslst}
 
-		xgui.hookEvent('onProcessModules', nil, clspnl.processModules)
-		xgui.addSubModule('TTT2 Heroes', clspnl, nil, name)
+		xgui.hookEvent("onProcessModules", nil, clspnl.processModules)
+		xgui.addSubModule("TTT2 Heroes", clspnl, nil, name)
 	end)
 end

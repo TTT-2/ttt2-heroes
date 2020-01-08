@@ -69,7 +69,7 @@ if CLIENT then
 		LANG.AddToLanguage("English", "ttt2_heroes_entity_crystal_destroy", "DESTROY")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_entity_crystal_destroy", "ZERSTÖREN")
 	end)
-	
+
 	hook.Add("Initialize", "TTT2HeroesKeyBinds", function()
 		-- Register binding functions
 		bind.Register("placecrystal", function()
