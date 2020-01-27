@@ -196,7 +196,7 @@ hook.Add("PlayerDisconnected", "TTT2CrystalDestroy", function(ply)
 end)
 
 if CLIENT then
-	local TryT
+	local TryT, ParT
 	local crystalMaterial = Material("vgui/ttt/icon_diamond")
 
 	-- target ID
@@ -208,6 +208,7 @@ if CLIENT then
 		if data.distance > 100 then return end
 
 		TryT = TryT or LANG.TryTranslation
+		ParT = ParT or LANG.GetParamTranslation
 
 		params.drawInfo = true
 		params.displayInfo.title.text = TryT("ttt2_heroes_entity_crystal")
@@ -217,7 +218,7 @@ if CLIENT then
 
 		if data.ent:GetOwner() == client then
 			params.displayInfo.key = input.GetKeyCode(input.LookupBinding("+use"))
-			params.displayInfo.subtitle.text = TryT("target_pickup")
+			params.displayInfo.subtitle.text = ParT("target_pickup", {usekey = Key("+use", "USE")})
 
 			params.displayInfo.desc[#params.displayInfo.desc + 1] = {
 				text = TryT("ttt2_heroes_entity_crystal_owner_self")
