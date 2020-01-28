@@ -245,7 +245,7 @@ if CLIENT then
 			}
 		end
 
-		if data.ent:GetOwner():GetTeam() ~= client:GetTeam() and client:GetActiveWeapon():GetClass() == "weapon_ttt_crystalknife" then
+		if data.ent:GetOwner():GetTeam() ~= client:GetTeam() and IsValid(client:GetActiveWeapon()) and client:GetActiveWeapon():GetClass() == "weapon_ttt_crystalknife" then
 			params.displayInfo.desc[#params.displayInfo.desc + 1] = {
 				text = TryT("ttt2_heroes_entity_crystal_destroy"),
 				color = SUPERVILLAIN.color
