@@ -10,14 +10,10 @@ if SERVER then
 	resource.AddFile("materials/models/props/w_crystal_green/w_Ground_mat.vmt")
 	resource.AddFile("materials/models/props/w_crystal_green/w_ground_red.vmt")
 	resource.AddFile("materials/sprites/crystal_sparkle.vmt")
-	--resource.AddFile("particles/crystal_fx.pcf")
 
 	resource.AddSingleFile("materials/models/props/w_crystal_green/w_crystal_normal.vtf")
 	resource.AddSingleFile("materials/models/props/w_crystal_green/w_Ground_normal.vtf")
 end
-
---game.AddParticles("particles/crystal_fx.pcf")
---PrecacheParticleSystem("crystal_shine")
 
 ENT.Type = "anim"
 ENT.Base = "base_anim"
@@ -45,8 +41,6 @@ function ENT:Initialize()
 
 	self:SetModelScale(0.75)
 	self:PhysWake()
-
-	--ParticleEffectAttach("crystal_shine", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 
 function ENT:UseOverride(activator)
@@ -62,9 +56,7 @@ function ENT:UseOverride(activator)
 
 		activator.crystaluses = activator.crystaluses + 1
 
-		net.Start("TTT2Crystal")
-		net.WriteInt(4, 8)
-		net.Send(activator)
+		LANG.Msg(activator, "ttt2_heroes_crystal_picked_up", nil, MSG_MSTACK_PLAIN)
 
 		activator:SetNWEntity("Crystal", NULL)
 
@@ -77,13 +69,9 @@ function ENT:UseOverride(activator)
 		end
 	elseif IsValid(activator) and activator:IsTerror() and owner == activator then
 		if activator.crystaluses >= 1 then
-			net.Start("TTT2Crystal")
-			net.WriteInt(7, 8)
-			net.Send(activator)
+			LANG.Msg(activator, "ttt2_heroes_crystal_already_picked_up", nil, MSG_MSTACK_WARN)
 		elseif not activator:HasClass() then
-			net.Start("TTT2Crystal")
-			net.WriteInt(9, 8)
-			net.Send(activator)
+			LANG.Msg(activator, "ttt2_heroes_crystal_ability_pickup_disabled", nil, MSG_MSTACK_WARN)
 		end
 	end
 end
@@ -99,9 +87,7 @@ function ENT:OnTakeDamage(dmginfo)
 
 	if infl:GetClass() == "weapon_ttt_crystalknife" then
 		if SERVER and IsValid(att) and att:IsPlayer() then
-			net.Start("TTT2Crystal")
-			net.WriteInt(5, 8)
-			net.Send(owner)
+			LANG.Msg(owner, ttt2_heroes_crystal_destoyed, nil, MSG_MSTACK_WARN)
 		end
 
 		GiveCrystalCredits(att, self)
@@ -200,56 +186,45 @@ if CLIENT then
 	local crystalMaterial = Material("vgui/ttt/icon_diamond")
 
 	-- target ID
-	hook.Add("TTTRenderEntityInfo", "DrawCrystalTargetID", function(data, params)
+	hook.Add("TTTRenderEntityInfo", "DrawCrystalTargetID", function(tData)
 		local client = LocalPlayer()
+		local ent = tData:GetEntity()
 
 		-- has to be a valid crystal
-		if not data.ent:GetOwner() or data.ent:GetClass() ~= "ttt_crystal" then return end
-		if data.distance > 100 then return end
+		if not IsValid(ent) or not ent:GetOwner() or ent:GetClass() ~= "ttt_crystal" then return end
+		if tData:GetEntityDistance() > 100 then return end
+
+		local owner = ent:GetOwner()
 
 		TryT = TryT or LANG.TryTranslation
 		ParT = ParT or LANG.GetParamTranslation
 
-		params.drawInfo = true
-		params.displayInfo.title.text = TryT("ttt2_heroes_entity_crystal")
+		-- enable targetID rendering
+		tData:EnableText()
+		tData:EnableOutline()
+		tData:SetOutlineColor(client:GetRoleColor())
 
-		params.drawOutline = true
-		params.outlineColor = client:GetRoleColor()
+		tData:SetTitle(TryT("ttt2_heroes_entity_crystal"))
 
-		if data.ent:GetOwner() == client then
-			params.displayInfo.key = input.GetKeyCode(input.LookupBinding("+use"))
-			params.displayInfo.subtitle.text = ParT("target_pickup", {usekey = Key("+use", "USE")})
-
-			params.displayInfo.desc[#params.displayInfo.desc + 1] = {
-				text = TryT("ttt2_heroes_entity_crystal_owner_self")
-			}
+		if owner == client then
+			tData:SetKeyBinding("+use")
+			tData:SetSubtitle(ParT("target_pickup", {usekey = Key("+use", "USE")}))
+			tData:AddDescriptionLine(TryT("ttt2_heroes_entity_crystal_owner_self"))
 		elseif client:GetSubRole() == ROLE_SUPERVILLAIN or client:GetSubRole() == ROLE_SIDEKICK then
-			params.displayInfo.icon[#params.displayInfo.icon + 1] = {
-				material = crystalMaterial,
-				color = COLOR_WHITE,
-			}
-			params.displayInfo.subtitle.text = TryT("ttt2_heroes_entity_crystal_knife")
-
-			params.displayInfo.desc[#params.displayInfo.desc + 1] = {
-				text = TryT("ttt2_heroes_entity_crystal_owner") .. data.ent:GetOwner():Nick()
-			}
+			tData:SetIcon(crystalMaterial)
+			tData:SetSubtitle(TryT("ttt2_heroes_entity_crystal_knife"))
+			tData:AddDescriptionLine(TryT("ttt2_heroes_entity_crystal_owner") .. owner:Nick())
 		else
-			params.displayInfo.icon[#params.displayInfo.icon + 1] = {
-				material = crystalMaterial,
-				color = COLOR_WHITE,
-			}
-			params.displayInfo.subtitle.text = TryT("ttt2_heroes_entity_crystal_cant_interact")
-
-			params.displayInfo.desc[#params.displayInfo.desc + 1] = {
-				text = TryT("ttt2_heroes_entity_crystal_owner_unknown")
-			}
+			tData:SetIcon(crystalMaterial)
+			tData:SetSubtitle(TryT("ttt2_heroes_entity_crystal_cant_interact"))
+			tData:AddDescriptionLine(TryT("ttt2_heroes_entity_crystal_owner_unknown"))
 		end
 
-		if data.ent:GetOwner():GetTeam() ~= client:GetTeam() and IsValid(client:GetActiveWeapon()) and client:GetActiveWeapon():GetClass() == "weapon_ttt_crystalknife" then
-			params.displayInfo.desc[#params.displayInfo.desc + 1] = {
-				text = TryT("ttt2_heroes_entity_crystal_destroy"),
-				color = SUPERVILLAIN.color
-			}
+		if owner:GetTeam() ~= client:GetTeam() and IsValid(client:GetActiveWeapon()) and client:GetActiveWeapon():GetClass() == "weapon_ttt_crystalknife" then
+			tData:AddDescriptionLine(
+				TryT("ttt2_heroes_entity_crystal_destroy"),
+				SUPERVILLAIN.color
+			)
 		end
 	end)
 end

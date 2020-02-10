@@ -11,7 +11,7 @@ hook.Add("TTTCPreventClassActivation", "TTTHActivationOnlyWithCrystal", function
 	return PreventWhenExecutedWithoutCrystal(ply)
 end)
 
-if SERVER then        
+if SERVER then
 	-- called on death / disconnect / destroy / ...
 	hook.Add("TTTHRemoveCrystal", "TTTHDisableAbility", function(ply) -- TODO doublicated since the new UpdateRole handling?
 		if ply:HasClass() then
@@ -31,7 +31,7 @@ if SERVER then
 			ply:GivePassiveClassEquipment()
 		end
 	end)
-	
+
 	hook.Add("TTTCPreventClassEquipment", "TTTHEquipmentOnlyWithCrystal", function(ply)
 			return PreventWhenExecutedWithoutCrystal(ply)
 	end)
@@ -48,7 +48,7 @@ else
 
 	hook.Add("TTTScoreboardColumns", "TTTHScoreboardClass", function(pnl)
 		--little timer to let the global bools update
-		timer.Simple(0.1, function() 
+		timer.Simple(0.1, function()
 			if GetGlobalBool("ttt2_classes") and GetGlobalBool("ttt2_heroes") then
 				if isfunction(pnl.GetColumns) then
 					for _, label in ipairs(pnl:GetColumns()) do

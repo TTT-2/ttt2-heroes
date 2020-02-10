@@ -1,6 +1,5 @@
 TTT2Crystal.AnyCrystals = TTT2Crystal.AnyCrystals or true
 
-util.AddNetworkString("TTT2Crystal")
 util.AddNetworkString("TTT2CrystalPlaceCrystal")
 util.AddNetworkString("TTT2ClientInitCrystal")
 util.AddNetworkString("TTT2ClientCVarChanged")
@@ -8,7 +7,7 @@ util.AddNetworkString("TTT2ClientCVarChanged")
 local cvnm = "ttt2_classes"
 local cvnmh = "ttt2_heroes"
 
-function PlaceCrystal(len, sender)
+local function PlaceCrystal(len, sender)
 	local isAutoplace = net.ReadBool()
 
 	if not GetConVar(cvnm):GetBool() or not GetConVar(cvnmh):GetBool() then return end
@@ -17,26 +16,22 @@ function PlaceCrystal(len, sender)
 
 	if not IsValid(ply) or not ply:IsTerror() or not ply:HasClass() then return end
 
-	if isAutoplace then
-		net.Start("TTT2Crystal")
-		net.WriteInt(0, 8)
-		net.Send(ply)
-	end
-
-	if not ply:GetNWBool("CanSpawnCrystal") or IsValid(ply:GetNWEntity("Crystal", NULL)) or ply.PlaceCrystal then
-		net.Start("TTT2Crystal")
-		net.WriteInt(1, 8)
-		net.Send(ply)
+	if not ply:GetNWBool("CanSpawnCrystal") or IsValid(ply:GetNWEntity("Crystal", nil)) or ply.PlaceCrystal then
+		if not isAutoplace then
+			LANG.Msg(ply, "ttt2_heroes_crystal_already_placed", nil, MSG_MSTACK_WARN)
+		end
 
 		return
 	end
 
 	if not ply:OnGround() then
-		net.Start("TTT2Crystal")
-		net.WriteInt(2, 8)
-		net.Send(ply)
+		LANG.Msg(ply, "ttt2_heroes_not_on_ground", nil, MSG_MSTACK_WARN)
 
 		return
+	end
+
+	if isAutoplace then
+		LANG.Msg(ply, "ttt2_heroes_crystal_auto_placed", nil, MSG_MSTACK_PLAIN)
 	end
 
 	if ply:IsInWorld() then
@@ -51,9 +46,7 @@ function PlaceCrystal(len, sender)
 			ply:SetNWBool("CanSpawnCrystal", false)
 			ply:SetNWEntity("Crystal", crystal)
 
-			net.Start("TTT2Crystal")
-			net.WriteInt(3, 8)
-			net.Send(ply)
+			LANG.Msg(ply, "ttt2_heroes_crystal_placed", nil, MSG_MSTACK_ROLE)
 
 			hook.Run("TTTHPlaceCrystal", ply)
 
@@ -97,9 +90,7 @@ function CrystalUpdate()
 			TTT2Crystal.AnyCrystals = false
 
 			if rs == ROUND_ACTIVE then
-				net.Start("TTT2Crystal")
-				net.WriteInt(8, 8)
-				net.Broadcast()
+				LANG.MsgAll("ttt2_heroes_all_crystals_destroyed", nil, MSG_MSTACK_WARN)
 			end
 
 			return

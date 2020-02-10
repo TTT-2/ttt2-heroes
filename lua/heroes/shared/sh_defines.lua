@@ -32,9 +32,20 @@ if CLIENT then
 		clslst:SetSize(390, 75)
 		clslst:SetSpacing(5)
 
-		local clslim = xlib.makecheckbox{label = "Enable Heroes? (ttt2_heroes) (def. 1)", repconvar = "rep_ttt2_heroes", parent = clslst}
-		clslst:AddItem(clslim)
-		xlib.makelabel{x = 0, y = 20, w = 415, wordwrap = true, label = "Disabling Heroes only disables the hero functionality, not the classes itself. You have to disable TTT2 Classes to play without classes alltogether.", parent = clslst}
+		clslst:AddItem(xlib.makecheckbox{
+			label = "Enable Heroes? (ttt2_heroes) (def. 1)",
+			repconvar = "rep_ttt2_heroes",
+			parent = clslst
+		})
+
+		clslst:AddItem(xlib.makelabel{
+			x = 0,
+			y = 20,
+			w = 415,
+			wordwrap = true,
+			label = "Disabling Heroes only disables the hero functionality, not the classes itself. You have to disable TTT2 Classes to play without classes alltogether.",
+			parent = clslst
+		})
 
 		xgui.hookEvent("onProcessModules", nil, clspnl.processModules)
 		xgui.addSubModule("TTT2 Heroes", clspnl, nil, name)
