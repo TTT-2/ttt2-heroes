@@ -46,15 +46,19 @@ end
 function ENT:UseOverride(activator)
 	local owner = self:GetOwner()
 
-	if IsValid(activator) and activator:IsTerror() and owner == activator and activator.crystaluses < 1 and activator:HasClass() then
+	local max_pickups = GetConVar("ttt2_heroes_max_crystal_pickups"):GetInt()
+
+	if IsValid(activator) and activator:IsTerror() and owner == activator and activator:HasClass()
+		and (activator.numCrystalPickups < max_pickups or max_pickups == -1)
+	then
 		activator:SetNWBool("CanSpawnCrystal", true)
 		activator:SetNWEntity("Crystal", NULL)
 
-		if not activator.crystaluses then
-			activator.crystaluses = 0
+		if not activator.numCrystalPickups then
+			activator.numCrystalPickups = 0
 		end
 
-		activator.crystaluses = activator.crystaluses + 1
+		activator.numCrystalPickups = activator.numCrystalPickups + 1
 
 		LANG.Msg(activator, "ttt2_heroes_crystal_picked_up", nil, MSG_MSTACK_PLAIN)
 
@@ -68,8 +72,10 @@ function ENT:UseOverride(activator)
 			end)
 		end
 	elseif IsValid(activator) and activator:IsTerror() and owner == activator then
-		if activator.crystaluses >= 1 then
-			LANG.Msg(activator, "ttt2_heroes_crystal_already_picked_up", nil, MSG_MSTACK_WARN)
+		if max_pickups == 0 then
+			LANG.Msg(activator, "ttt2_heroes_crystal_already_no_pickup", nil, MSG_MSTACK_WARN)
+		elseif activator.numCrystalPickups >= max_pickups then
+			LANG.Msg(activator, "ttt2_heroes_crystal_already_picked_up", {num = max_pickups}, MSG_MSTACK_WARN)
 		elseif not activator:HasClass() then
 			LANG.Msg(activator, "ttt2_heroes_crystal_ability_pickup_disabled", nil, MSG_MSTACK_WARN)
 		end

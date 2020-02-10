@@ -111,7 +111,7 @@ local function ResetCrystals()
 		v:SetNWBool("CanSpawnCrystal", true)
 		v:SetNWEntity("Crystal", NULL)
 
-		v.crystaluses = 0
+		v.numCrystalPickups = 0
 	end
 
 	TTT2Crystal.AnyCrystals = true
@@ -125,7 +125,7 @@ local function CrystalInit(ply)
 	ply:SetNWBool("CanSpawnCrystal", true)
 	ply:SetNWEntity("Crystal", NULL)
 
-	ply.crystaluses = 0
+	ply.numCrystalPickups = 0
 end
 hook.Add("PlayerInitialSpawn", "TTT2CrystalInit", CrystalInit)
 
