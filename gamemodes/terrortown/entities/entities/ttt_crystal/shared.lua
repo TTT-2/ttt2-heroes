@@ -217,11 +217,11 @@ if CLIENT then
 			tData:SetSubtitle(ParT("target_pickup", {usekey = Key("+use", "USE")}))
 			tData:AddDescriptionLine(TryT("ttt2_heroes_entity_crystal_owner_self"))
 		elseif client:GetSubRole() == ROLE_SUPERVILLAIN or client:GetSubRole() == ROLE_SIDEKICK then
-			tData:SetIcon(crystalMaterial)
+			tData:AddIcon(crystalMaterial)
 			tData:SetSubtitle(TryT("ttt2_heroes_entity_crystal_knife"))
 			tData:AddDescriptionLine(TryT("ttt2_heroes_entity_crystal_owner") .. owner:Nick())
 		else
-			tData:SetIcon(crystalMaterial)
+			tData:AddIcon(crystalMaterial)
 			tData:SetSubtitle(TryT("ttt2_heroes_entity_crystal_cant_interact"))
 			tData:AddDescriptionLine(TryT("ttt2_heroes_entity_crystal_owner_unknown"))
 		end
