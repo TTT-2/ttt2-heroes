@@ -93,7 +93,7 @@ function ENT:OnTakeDamage(dmginfo)
 
 	if infl:GetClass() == "weapon_ttt_crystalknife" then
 		if SERVER and IsValid(att) and att:IsPlayer() then
-			LANG.Msg(owner, ttt2_heroes_crystal_destoyed, nil, MSG_MSTACK_WARN)
+			LANG.Msg(owner, "ttt2_heroes_crystal_destoyed", nil, MSG_MSTACK_WARN)
 		end
 
 		GiveCrystalCredits(att, self)
