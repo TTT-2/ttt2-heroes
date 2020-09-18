@@ -1,4 +1,4 @@
-CreateConVar("ttt_crystal_auto", "1", {FCVAR_ARCHIVE}, "Should the crystal be autoplaced?")
+local con_crystal_auto = CreateConVar("ttt_crystal_auto", "1", {FCVAR_ARCHIVE}, "Should the crystal be autoplaced?")
 
 net.Receive("TTT2ClientInitCrystal", function()
 	include("crystal/client/cl_menu.lua")
@@ -15,8 +15,7 @@ hook.Add("TTTCUpdateClass", "TTT2CrystalAutomaticPlacementClassSelect", function
 end)
 
 function AutoPlaceCrystal()
-	if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") then return end
-	if not GetConVar("ttt_crystal_auto"):GetBool() then return end
+	if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") or not con_crystal_auto:GetBool() then return end
 
 	local client = LocalPlayer()
 

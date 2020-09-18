@@ -4,13 +4,10 @@ util.AddNetworkString("TTT2CrystalPlaceCrystal")
 util.AddNetworkString("TTT2ClientInitCrystal")
 util.AddNetworkString("TTT2ClientCVarChanged")
 
-local cvnm = "ttt2_classes"
-local cvnmh = "ttt2_heroes"
-
 local function PlaceCrystal(len, sender)
 	local isAutoplace = net.ReadBool()
 
-	if not GetConVar(cvnm):GetBool() or not GetConVar(cvnmh):GetBool() then return end
+	if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") then return end
 
 	local ply = sender
 
@@ -71,7 +68,7 @@ local function DestroyAllCrystals()
 end
 
 function CrystalUpdate()
-	if not TTT2Crystal.AnyCrystals or not GetConVar(cvnm):GetBool() or not GetConVar(cvnmh):GetBool() then return end
+	if not TTT2Crystal.AnyCrystals or not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") then return end
 
 	local rs = GetRoundState()
 
