@@ -19,7 +19,7 @@ ENT.Type = "anim"
 ENT.Base = "base_anim"
 ENT.Model = Model("models/props/w_crystal_green/w_crystal_green.mdl")
 ENT.CanUseKey = true
-ENT.CanPickup = true
+ENT.CanPickup = false
 
 function ENT:Initialize()
 	self:SetModel(self.Model)
