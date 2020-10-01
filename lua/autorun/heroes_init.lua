@@ -40,36 +40,58 @@ if CLIENT then
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_all_crystals_destroyed", "Alle Kristalle wurden zerstört!")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_crystal_ability_pickup_disabled", "Du kannst deinen Kristall nicht aufheben, da du keine Fähigkeit mehr hast!")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_crystal_auto_placed", "Versuche deinen Kristall automatisch zu platzieren. Du kannst dieses Feature in den lokalen Heroes Einstellung deaktivieren.")
+		
+		LANG.AddToLanguage("Русский", "ttt2_heroes_crystal_already_placed", "Вы уже разместили кристалл!")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_not_on_ground", "Вы должны стоять на твёрдой земле, чтобы разместить свой кристалл!")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_crystal_placed", "Ваш кристалл успешно размещён!")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_crystal_picked_up", "Вы успешно подобрали свой кристалл!")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_crystal_destoyed", "Ваш кристалл был уничтожен!")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_ability_disabled", "Вы не можете использовать свою способность, так как не разместили свой кристалл!")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_crystal_already_picked_up", "Вы можете забрать свой кристалл только {num} раз!")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_crystal_already_no_pickup", "Вы не можете забрать свой кристалл!")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_all_crystals_destroyed", "Все кристаллы были уничтожены!")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_crystal_ability_pickup_disabled", "Вы не можете подобрать свой кристалл, так как у вас нет способности!")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_crystal_auto_placed", "Попытка автоматически разместить кристалл. Вы можете отключить эту функцию в локальных настройках героев.")
 
 		LANG.AddToLanguage("English", "ttt2_heroes_bind_place", "Place Crystal")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_bind_place", "Platziere Kristall")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_bind_place", "Разместить кристалл")
 
 		LANG.AddToLanguage("English", "ttt2_heroes_settings_crystal", "Crystal")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_settings_crystal", "Kristall")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_settings_crystal", "Кристалл")
 
 		LANG.AddToLanguage("English", "ttt2_heroes_settings_autoplace", "Automatically try placing a Crystal.")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_settings_autoplace", "Versuche den Kristall automatisch zu platzieren.")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_settings_autoplace", "Автоматически попробует разместить кристалл.")
 
 		LANG.AddToLanguage("English", "ttt2_heroes_entity_crystal", "Heroes Crystal")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_entity_crystal", "Helden Kristall")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_entity_crystal", "Кристалл Героев")
 
 		LANG.AddToLanguage("English", "ttt2_heroes_entity_crystal_owner_self", "You are the owner of this crystal!")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_entity_crystal_owner_self", "Du bist der Besitzer dieses Kristalls!")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_entity_crystal_owner_self", "Вы владелец этого кристалла!")
 
 		LANG.AddToLanguage("English", "ttt2_heroes_entity_crystal_owner_unknown", "The owner of this crystal is unknown")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_entity_crystal_owner_unknown", "Der Besitzer dieses Kristalls ist unbekannt")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_entity_crystal_owner_unknown", "Владелец этого кристалла неизвестен")
 
 		LANG.AddToLanguage("English", "ttt2_heroes_entity_crystal_owner", "Crystal owner: ")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_entity_crystal_owner", "Kristallbesitzer: ")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_entity_crystal_owner", "Владелец кристалла: ")
 
 		LANG.AddToLanguage("English", "ttt2_heroes_entity_crystal_knife", "Use your crystal knife to gain equipment credits")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_entity_crystal_knife", "Benutze dein Kristallmesser um Ausrüstungspunkte zu erhalten")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_entity_crystal_knife", "Используйте свой кристальный нож, чтобы получить кредиты на снаряжение")
 
 		LANG.AddToLanguage("English", "ttt2_heroes_entity_crystal_cant_interact", "You can't interact with this crystal")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_entity_crystal_cant_interact", "Du kannst mit diesem Kristall nicht interagieren")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_entity_crystal_cant_interact", "Вы не можете взаимодействовать с этим кристаллом")
 
 		LANG.AddToLanguage("English", "ttt2_heroes_entity_crystal_destroy", "DESTROY")
 		LANG.AddToLanguage("Deutsch", "ttt2_heroes_entity_crystal_destroy", "ZERSTÖREN")
+		LANG.AddToLanguage("Русский", "ttt2_heroes_entity_crystal_destroy", "РАЗРУШИТЬ")
 	end)
 
 	hook.Add("Initialize", "TTT2HeroesKeyBinds", function()

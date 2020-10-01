@@ -48,9 +48,17 @@ function ROLE:Initialize()
 		LANG.AddToLanguage("Deutsch", "target_" .. SUPERVILLAIN.name, "Superschurke")
 		LANG.AddToLanguage("Deutsch", "ttt2_desc_" .. SUPERVILLAIN.name, [[Der Superschurke ist ein Verräter (der mit den anderen Verräter-Rollen zusammenarbeitet). Es ist sein Ziel alle anderen Rollen (außer Verräter-Rollen) zu töten. Er kann die Crystals seiner Feinde zerstören um Credits zu verdienen und ihnen die Heldenfähigkeiten zu nehmen.]])
 
+		LANG.AddToLanguage("Русский", SUPERVILLAIN.name, "Суперзлодей")
+		LANG.AddToLanguage("Русский", "info_popup_" .. SUPERVILLAIN.name, [[Вы суперзлодей! Попробуйте уничтожить несколько кристаллов своим ножом, чтобы заработать себе кредиты! Удаление кристаллов также удаляет геройские способности его владельца.]])
+		LANG.AddToLanguage("Русский", "body_found_" .. SUPERVILLAIN.abbr, "Он был суперзлодеем!")
+		LANG.AddToLanguage("Русский", "search_role_" .. SUPERVILLAIN.abbr, "Этот человек был суперзлодеем!")
+		LANG.AddToLanguage("Русский", "target_" .. SUPERVILLAIN.name, "Суперзлодей")
+		LANG.AddToLanguage("Русский", "ttt2_desc_" .. SUPERVILLAIN.name, [[Суперзлодей - предатель (который работает вместе с другими предателями)! Цель состоит в том, чтобы убить всех остальных ролей, кроме других ролей предателей. Суперзлодей может уничтожать кристаллы своих врагов, чтобы получить кредиты и удалить их способности героя.]])
+
 		-- other role language elements
 		LANG.AddToLanguage("English", "credit_h_all", "You have been awarded {num} equipment credit(s) by destroying a crystal.")
 		LANG.AddToLanguage("Deutsch", "credit_h_all", "Dir wurde(n) {num} Ausrüstungs-Credit(s) für die Zerstörung eines Kristalles gegeben.")
+		LANG.AddToLanguage("Русский", "credit_h_all", "Вы получили {num} кредитов, уничтожив кристалл.")
 	end
 end
 
