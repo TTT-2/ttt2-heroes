@@ -1,9 +1,5 @@
 local con_crystal_auto = CreateConVar("ttt_crystal_auto", "1", {FCVAR_ARCHIVE}, "Should the crystal be autoplaced?")
 
-net.Receive("TTT2ClientInitCrystal", function()
-	include("crystal/client/cl_menu.lua")
-end)
-
 -- autoplace crystal on round begin
 hook.Add("TTTBeginRound", "TTT2CrystalAutomaticPlacementRoundBegin", function()
 	AutoPlaceCrystal()

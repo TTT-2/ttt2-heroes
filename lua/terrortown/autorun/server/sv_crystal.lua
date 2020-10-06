@@ -1,7 +1,6 @@
 TTT2Crystal.AnyCrystals = TTT2Crystal.AnyCrystals or true
 
 util.AddNetworkString("TTT2CrystalPlaceCrystal")
-util.AddNetworkString("TTT2ClientInitCrystal")
 util.AddNetworkString("TTT2ClientCVarChanged")
 
 local function PlaceCrystal(len, sender)
@@ -116,9 +115,6 @@ end
 hook.Add("TTTPrepareRound", "TTT2ResetCrystalValues", ResetCrystals)
 
 local function CrystalInit(ply)
-	net.Start("TTT2ClientInitCrystal")
-	net.Send(ply)
-
 	ply:SetNWBool("CanSpawnCrystal", true)
 	ply:SetNWEntity("Crystal", NULL)
 
