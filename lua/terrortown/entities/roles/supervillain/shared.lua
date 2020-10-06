@@ -1,5 +1,7 @@
 if SERVER then
 	AddCSLuaFile()
+
+	resource.AddFile("materials/vgui/ttt/dynamic/roles/icon_svil.vmt")
 end
 
 ROLE.Base = "ttt_role_base"
@@ -31,27 +33,6 @@ end
 
 function ROLE:Initialize()
 	roles.SetBaseRole(self, ROLE_TRAITOR)
-
-	if CLIENT then
-		-- Role specific language elements
-		LANG.AddToLanguage("English", SUPERVILLAIN.name, "Supervillain")
-		LANG.AddToLanguage("English", "info_popup_" .. SUPERVILLAIN.name, [[You are a Supervillain! Try to destroy some Crystals with your knife to earn yourself some credits! Removing Crystals also removes the hero ability of the owner.]])
-		LANG.AddToLanguage("English", "body_found_" .. SUPERVILLAIN.abbr, "They were a Supervillain!")
-		LANG.AddToLanguage("English", "search_role_" .. SUPERVILLAIN.abbr, "This person was a Supervillain!")
-		LANG.AddToLanguage("English", "target_" .. SUPERVILLAIN.name, "Supervillain")
-		LANG.AddToLanguage("English", "ttt2_desc_" .. SUPERVILLAIN.name, [[The Supervillain is a Traitor (who works together with the other traitors)! The goal is to kill all other roles except the other traitor roles. The Supervillain is able to destroy the crystals of his enemies to get credits and remove their hero abilities.]])
-
-		LANG.AddToLanguage("Deutsch", SUPERVILLAIN.name, "Superschurke")
-		LANG.AddToLanguage("Deutsch", "info_popup_" .. SUPERVILLAIN.name, [[Du bist ein Superschurke! Versuche ein paar Kristalle mit deinem Messter zu zerstören, um Credits zu verdienen! Das Entfernen der Kristalle entfernt auch die Heldenfähigkeit des Besitzers.]])
-		LANG.AddToLanguage("Deutsch", "body_found_" .. SUPERVILLAIN.abbr, "Er war ein Superschurke.")
-		LANG.AddToLanguage("Deutsch", "search_role_" .. SUPERVILLAIN.abbr, "Diese Person war ein Superschurke!")
-		LANG.AddToLanguage("Deutsch", "target_" .. SUPERVILLAIN.name, "Superschurke")
-		LANG.AddToLanguage("Deutsch", "ttt2_desc_" .. SUPERVILLAIN.name, [[Der Superschurke ist ein Verräter (der mit den anderen Verräter-Rollen zusammenarbeitet). Es ist sein Ziel alle anderen Rollen (außer Verräter-Rollen) zu töten. Er kann die Crystals seiner Feinde zerstören um Credits zu verdienen und ihnen die Heldenfähigkeiten zu nehmen.]])
-
-		-- other role language elements
-		LANG.AddToLanguage("English", "credit_h_all", "You have been awarded {num} equipment credit(s) by destroying a crystal.")
-		LANG.AddToLanguage("Deutsch", "credit_h_all", "Dir wurde(n) {num} Ausrüstungs-Credit(s) für die Zerstörung eines Kristalles gegeben.")
-	end
 end
 
 if SERVER then

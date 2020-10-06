@@ -53,3 +53,7 @@ net.Receive("TTT2ClientCVarChanged", function()
 		end
 	end
 end)
+
+bind.Register("placecrystal", function()
+	LookUpCrystal()
+end, nil, "header_bindings_heroes", "ttt2_heroes_bind_place", KEY_T)
