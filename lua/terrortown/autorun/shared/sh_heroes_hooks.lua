@@ -35,9 +35,9 @@ if SERVER then
 	hook.Add("TTTCPreventClassEquipment", "TTTHEquipmentOnlyWithCrystal", function(ply)
 			return PreventWhenExecutedWithoutCrystal(ply)
 	end)
+end
 
-else
-
+if CLIENT then
 	hook.Add("TTTCPreventClassAbortion", "TTTHAbortionOnlyWithCrystal", function(ply)
 			return PreventWhenExecutedWithoutCrystal(ply)
 	end)
@@ -49,17 +49,20 @@ else
 	hook.Add("TTTScoreboardColumns", "TTTHScoreboardClass", function(pnl)
 		--little timer to let the global bools update
 		timer.Simple(0.1, function()
-			if GetGlobalBool("ttt2_classes") and GetGlobalBool("ttt2_heroes") then
-				if isfunction(pnl.GetColumns) then
-					for _, label in ipairs(pnl:GetColumns()) do
-						if label:GetText() == "Class" then
-							label:SetText("Hero")
-						end
-					end
-				end
+			if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") or not isfunction(pnl.GetColumns) then return end
 
+			for _, label in ipairs(pnl:GetColumns()) do
+				if label:GetText() == "Class" then
+					label:SetText("Hero")
+				end
 			end
 		end)
+	end)
+
+	hook.Add("InitPostEntity", "ModifyTTTScoreboardLogo", function()
+		if TTTScoreboard and GetGlobalBool("ttt2_heroes") then
+			TTTScoreboard.Logo = surface.GetTextureID("vgui/ttt/score_logo_heroes")
+		end
 	end)
 
 	hook.Add("TTT2AddChange", "TTTHeroesChanges", function()
