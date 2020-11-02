@@ -5,7 +5,7 @@ L[SUPERVILLAIN.name] = "Super-Vilain"
 L["info_popup_" .. SUPERVILLAIN.name] = [[Vous êtes un Super-Vilain! Essayez de détruire des cristaux avec votre couteau pour gagner des crédits!
 La destruction des cristaux supprime également le pouvoir des héros a qui ils appartenaient..]]
 L["body_found_" .. SUPERVILLAIN.abbr] = "C'était un Super-Vilain!"
-L["search_role_" .. SUPERVILLAIN.abbr] = "Cette personne était un Super-Vilain!"
+L["search_role_" .. SUPERVILLAIN.abbr] = "C'était un Super-Vilain!"
 L["target_" .. SUPERVILLAIN.name] = "Super-Vilain"
 L["ttt2_desc_" .. SUPERVILLAIN.name] = [[Le Super-Vilain est un traître (qui travaille avec les autres traîtres)! Son but est de tuer tous les autres rôles, à l'exception des autres  traître. Le Super-Vilain est capable de détruire les cristaux de ses ennemis pour obtenir des crédits et leur retirer leurs pouvoirs de héros.]]
 
