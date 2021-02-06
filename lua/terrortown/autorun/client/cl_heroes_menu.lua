@@ -1,5 +1,5 @@
 local function PopulateHeroesPanel(parent)
-	local form = CreateTTT2Form(parent, "header_addons_heroes")
+	local form = vgui.CreateTTT2Form(parent, "header_addons_heroes")
 
 	form:MakeCheckBox({
 		label = "label_heroes_auto_place_enable",
