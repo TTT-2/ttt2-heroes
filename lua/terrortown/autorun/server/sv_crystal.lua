@@ -12,7 +12,7 @@ local function PlaceCrystal(len, sender)
 
 	if not IsValid(ply) or not ply:IsTerror() or not ply:HasClass() then return end
 
-	if not ply:GetNWBool("CanSpawnCrystal") or IsValid(ply:GetNWEntity("Crystal", nil)) or ply.PlaceCrystal then
+	if not ply:GetNWBool("CanSpawnCrystal") or IsValid(ply:GetNWEntity("Crystal", nil)) then
 		if not isAutoplace then
 			LANG.Msg(ply, "ttt2_heroes_crystal_already_placed", nil, MSG_MSTACK_WARN)
 		end
