@@ -12,6 +12,8 @@ L["ttt2_desc_" .. SUPERVILLAIN.name] = [[Le Super-Vilain est un traître (qui tr
 -- OTHER LANGUAGE STRINGS
 L["credit_h_all"] = "Vous avez été récompensé de {num} crédit(s) d'équipement pour avoir détruit un cristal."
 
+--L["ttt2_heroes_hero_sb"] = "Hero"
+
 L["ttt2_heroes_crystal_already_placed"] = "Vous avez déjà placé un cristal!"
 L["ttt2_heroes_not_on_ground"] = "Vous devez toucher le sol lorsque vous placez votre cristal!"
 L["ttt2_heroes_crystal_placed"] = "Votre cristal a été placé avec succès!"

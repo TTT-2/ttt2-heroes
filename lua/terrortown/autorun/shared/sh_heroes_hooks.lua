@@ -52,8 +52,8 @@ if CLIENT then
 			if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") or not isfunction(pnl.GetColumns) then return end
 
 			for _, label in ipairs(pnl:GetColumns()) do
-				if label:GetText() == "Class" then
-					label:SetText("Hero")
+				if label:GetText() == LANG.GetTranslation("ttt2_tttc_class_sb") then
+					label:SetText(LANG.GetTranslation("ttt2_heroes_hero_sb"))
 				end
 			end
 		end)

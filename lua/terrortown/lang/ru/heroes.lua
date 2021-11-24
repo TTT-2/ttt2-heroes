@@ -12,6 +12,8 @@ L["ttt2_desc_" .. SUPERVILLAIN.name] = [[Суперзлодей - предате
 -- OTHER LANGUAGE STRINGS
 L["credit_h_all"] = "Вы получили {num} кредитов, уничтожив кристалл."
 
+--L["ttt2_heroes_hero_sb"] = "Hero"
+
 L["ttt2_heroes_crystal_already_placed"] = "Вы уже разместили кристалл!"
 L["ttt2_heroes_not_on_ground"] = "Вы должны стоять на твёрдой земле, чтобы разместить свой кристалл!"
 L["ttt2_heroes_crystal_placed"] = "Ваш кристалл успешно размещён!"

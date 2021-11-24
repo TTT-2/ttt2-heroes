@@ -12,6 +12,8 @@ L["ttt2_desc_" .. SUPERVILLAIN.name] = [[Der Superschurke ist ein Verräter (der
 -- OTHER LANGUAGE STRINGS
 L["credit_h_all"] = "Dir wurde(n) {num} Ausrüstungs-Credit(s) für die Zerstörung eines Kristalles gegeben."
 
+L["ttt2_heroes_hero_sb"] = "Hero"
+
 L["ttt2_heroes_crystal_already_placed"] = "Du hast schon einen Kristall platziert!"
 L["ttt2_heroes_not_on_ground"] = "Du musst beim Platzieren deines Kristalls auf dem Boden stehen!"
 L["ttt2_heroes_crystal_placed"] = "Dein Kristall wurde erfolgreich platziert!"

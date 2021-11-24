@@ -12,6 +12,8 @@ L["ttt2_desc_" .. SUPERVILLAIN.name] = [[The Supervillain is a Traitor (who work
 -- OTHER LANGUAGE STRINGS
 L["credit_h_all"] = "You have been awarded {num} equipment credit(s) by destroying a crystal."
 
+L["ttt2_heroes_hero_sb"] = "Hero"
+
 L["ttt2_heroes_crystal_already_placed"] = "You have already placed a crystal!"
 L["ttt2_heroes_not_on_ground"] = "You have to stand on solid ground to place your crystal!"
 L["ttt2_heroes_crystal_placed"] = "Your crystal has been successfully placed!"
