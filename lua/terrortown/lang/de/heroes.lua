@@ -41,3 +41,12 @@ L["header_addons_heroes"] = "General Heroes Settings"
 L["label_heroes_auto_place_enable"] = "Soll der Kristall nach Heldenauswahl automatisch platziert werden?"
 
 L["header_bindings_heroes"] = "TTT2 Heroes"
+
+--L["submenu_server_addons_heroes_title"] = "TTT2 Heroes"
+--L["header_server_addons_heroes"] = "General Heroes Settings"
+
+--L["label_heroes_enable"] = "Enable TTT2 Heroes"
+--L["label_heroes_max_crystal_pickups"] = "Upper crytal pickup limit"
+
+--L["help_heroes_enable"] = "Disabling Heroes only disables the hero functionality, not the classes itself. You have to disable TTT2 Classes to play without classes alltogether."
+--L["help_heroes_max_crystal_pickups"] = "Set upper limit for crystal pickups, set to '-1' to allow for infinite pickups."
