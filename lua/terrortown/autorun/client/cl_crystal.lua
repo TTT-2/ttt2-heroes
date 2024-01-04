@@ -1,3 +1,5 @@
+local materialIconCrystal = Material("vgui/ttt/icon_diamond")
+
 local con_crystal_auto = CreateConVar("ttt_crystal_auto", "1", {FCVAR_ARCHIVE}, "Should the crystal be autoplaced?")
 
 -- autoplace crystal on round begin
@@ -50,6 +52,17 @@ net.Receive("TTT2ClientCVarChanged", function()
 	end
 end)
 
-bind.Register("placecrystal", function()
-	LookUpCrystal()
-end, nil, "header_bindings_heroes", "ttt2_heroes_bind_place", KEY_T)
+hook.Add("TTT2FinishedLoading", "TTT2HeroesSetupBindings", function()
+	bind.Register("placecrystal", function()
+		LookUpCrystal()
+	end, nil, "header_bindings_heroes", "ttt2_heroes_bind_place", KEY_T)
+
+	keyhelp.RegisterKeyHelper("placecrystal", materialIconCrystal, KEYHELP_CORE, "label_keyhelper_place_crystal", function(client)
+		if client:IsSpec() or not client:HasClass() then return end
+
+		if not client:GetNWBool("CanSpawnCrystal") or IsValid(client:GetNWEntity("Crystal", nil)) then return end
+
+		return true
+	end)
+end)
+

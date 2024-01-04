@@ -16,7 +16,7 @@ L["ttt2_heroes_hero_sb"] = "Hero"
 
 L["ttt2_heroes_crystal_already_placed"] = "You have already placed a crystal!"
 L["ttt2_heroes_not_on_ground"] = "You have to stand on solid ground to place your crystal!"
-L["ttt2_heroes_crystal_placed"] = "Your crystal has been successfully placed!"
+L["ttt2_heroes_crystal_placed"] = "Your crystal has been placed successfully!"
 L["ttt2_heroes_crystal_picked_up"] = "You've successfully picked up your crystal!"
 L["ttt2_heroes_crystal_destoyed"] = "Your crystal has been destroyed!"
 L["ttt2_heroes_ability_disabled"] = "You can't use your ability since you haven't placed your crystal!"
@@ -50,3 +50,5 @@ L["label_heroes_max_crystal_pickups"] = "Upper crytal pickup limit"
 
 L["help_heroes_enable"] = "Disabling Heroes only disables the hero functionality, not the classes itself. You have to disable TTT2 Classes to play without classes alltogether."
 L["help_heroes_max_crystal_pickups"] = "Set upper limit for crystal pickups, set to '-1' to allow for infinite pickups."
+
+L["label_keyhelper_place_crystal"] = "place crystal on ground"

@@ -3,12 +3,10 @@ TTT2Crystal.AnyCrystals = TTT2Crystal.AnyCrystals or true
 util.AddNetworkString("TTT2CrystalPlaceCrystal")
 util.AddNetworkString("TTT2ClientCVarChanged")
 
-local function PlaceCrystal(len, sender)
+net.Receive("TTT2CrystalPlaceCrystal", function(_, ply)
 	local isAutoplace = net.ReadBool()
 
 	if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") then return end
-
-	local ply = sender
 
 	if not IsValid(ply) or not ply:IsTerror() or not ply:HasClass() then return end
 
@@ -49,8 +47,7 @@ local function PlaceCrystal(len, sender)
 			CrystalUpdate()
 		end
 	end
-end
-net.Receive("TTT2CrystalPlaceCrystal", PlaceCrystal)
+end)
 
 local function DestroyAllCrystals()
 	for _, v in ipairs(ents.FindByClass("ttt_crystal")) do

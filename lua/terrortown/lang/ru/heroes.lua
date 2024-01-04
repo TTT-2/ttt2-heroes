@@ -50,3 +50,5 @@ L["header_bindings_heroes"] = "Герои TTT2"
 
 --L["help_heroes_enable"] = "Disabling Heroes only disables the hero functionality, not the classes itself. You have to disable TTT2 Classes to play without classes alltogether."
 --L["help_heroes_max_crystal_pickups"] = "Set upper limit for crystal pickups, set to '-1' to allow for infinite pickups."
+
+--L["label_keyhelper_place_crystal"] = "place crystal on ground"
