@@ -60,6 +60,8 @@ hook.Add("TTT2FinishedLoading", "TTT2HeroesSetupBindings", function()
 	keyhelp.RegisterKeyHelper("placecrystal", materialIconCrystal, KEYHELP_CORE, "label_keyhelper_place_crystal", function(client)
 		if client:IsSpec() or not client:HasClass() then return end
 
+		if not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes") then return end
+
 		if not client:GetNWBool("CanSpawnCrystal") or IsValid(client:GetNWEntity("Crystal", nil)) then return end
 
 		return true
