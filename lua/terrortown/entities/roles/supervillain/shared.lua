@@ -47,34 +47,17 @@ if SERVER then
 	-- Give Loadout on respawn and rolechange	
 	function ROLE:GiveRoleLoadout(ply, isRoleChange)
 		ply:GiveEquipmentWeapon("weapon_ttt_crystalknife")
-		ply:GiveEquipmentItem("item_ttt_radar")
 	end
 
 	-- Remove Loadout on death and rolechange
 	function ROLE:RemoveRoleLoadout(ply, isRoleChange)
 		ply:StripWeapon("weapon_ttt_crystalknife")
-		ply:RemoveEquipmentItem("item_ttt_radar")
 	end
 
 	-- disable this role if this mod is deactivated
 	hook.Add("TTT2RoleNotSelectable", "TTT2CrystalDisableSupervillain", function(roleData)
 		if roleData == SUPERVILLAIN and (not GetGlobalBool("ttt2_classes") or not GetGlobalBool("ttt2_heroes")) then
 			return true
-		end
-	end)
-
-	local oldValue
-
-	-- role vote support
-	hook.Add("TTT2RoleVoteWinner", "TTT2HroleEnableCrystal", function(role)
-		if role == ROLE_SUPERVILLAIN and not GetGlobalBool("ttt2_classes") and not GetGlobalBool("ttt2_heroes") then
-			oldValue = "0"
-
-			RunConsoleCommand("ttt2_classes", "1")
-			RunConsoleCommand("ttt2_heroes", "1")
-		else
-			RunConsoleCommand("ttt2_classes", oldValue)
-			RunConsoleCommand("ttt2_heroes", oldValue)
 		end
 	end)
 end
