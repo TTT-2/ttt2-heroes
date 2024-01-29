@@ -41,6 +41,10 @@ function ENT:Initialize()
 
 	self:SetModelScale(0.75)
 	self:PhysWake()
+
+	if SERVER then
+		markerVision.RegisterEntity(self, ROLE_SUPERVILLAIN, VISIBLE_FOR_ROLE)
+	end
 end
 
 function ENT:UseOverride(activator)
@@ -174,7 +178,7 @@ function ENT:Draw()
 end
 
 function ENT:OnRemove()
-	local owner = self:GetOwner() or self.Owner
+	local owner = self:GetOwner()
 
 	if IsValid(owner) then
 		hook.Run("TTTHRemoveCrystal", owner)
@@ -189,7 +193,7 @@ end)
 
 if CLIENT then
 	local TryT, ParT
-	local crystalMaterial = Material("vgui/ttt/icon_diamond")
+	local materialCrystal = Material("vgui/ttt/crystal")
 
 	-- target ID
 	hook.Add("TTTRenderEntityInfo", "DrawCrystalTargetID", function(tData)
@@ -217,11 +221,11 @@ if CLIENT then
 			tData:SetSubtitle(ParT("target_pickup", {usekey = Key("+use", "USE")}))
 			tData:AddDescriptionLine(TryT("ttt2_heroes_entity_crystal_owner_self"))
 		elseif client:GetSubRole() == ROLE_SUPERVILLAIN or client:GetSubRole() == ROLE_SIDEKICK then
-			tData:AddIcon(crystalMaterial)
+			tData:AddIcon(materialCrystal)
 			tData:SetSubtitle(TryT("ttt2_heroes_entity_crystal_knife"))
 			tData:AddDescriptionLine(TryT("ttt2_heroes_entity_crystal_owner") .. owner:Nick())
 		else
-			tData:AddIcon(crystalMaterial)
+			tData:AddIcon(materialCrystal)
 			tData:SetSubtitle(TryT("ttt2_heroes_entity_crystal_cant_interact"))
 			tData:AddDescriptionLine(TryT("ttt2_heroes_entity_crystal_owner_unknown"))
 		end
@@ -232,5 +236,27 @@ if CLIENT then
 				SUPERVILLAIN.color
 			)
 		end
+	end)
+
+	hook.Add("TTT2RenderMarkerVisionInfo", "HUDDrawMarkerVisionCrystal", function(mvData)
+		local client = LocalPlayer()
+		local ent = mvData:GetEntity()
+
+		if not client:IsTerror() or not IsValid(ent) or ent:GetClass() ~= "ttt_crystal" then return end
+
+		local owner = ent:GetOwner()
+		local nick = IsValid(owner) and owner:Nick() or "---"
+
+		local distance = math.Round(util.HammerUnitsToMeters(mvData:GetEntityDistance()), 1)
+
+		mvData:EnableText()
+
+		mvData:AddIcon(materialCrystal)
+		mvData:SetTitle(TryT("ttt2_heroes_entity_crystal"))
+
+		mvData:AddDescriptionLine(ParT("marker_vision_owner", {owner = nick}))
+		mvData:AddDescriptionLine(ParT("marker_vision_distance", {distance = distance}))
+
+		mvData:AddDescriptionLine(TryT("marker_vision_visible_for_" .. markerVision.GetVisibleFor(ent)), COLOR_SLATEGRAY)
 	end)
 end

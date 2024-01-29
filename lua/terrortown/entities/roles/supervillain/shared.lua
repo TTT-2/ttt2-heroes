@@ -44,31 +44,6 @@ function ROLE:Initialize()
 end
 
 if SERVER then
-	-- give the supervillain his special crystal radar
-	ROLE.CustomRadar = function(ply)
-		if TTT2Crystal.AnyCrystals then
-			local targets = {}
-			local scan_ents = ents.FindByClass("ttt_crystal")
-
-			for _, t in ipairs(scan_ents) do
-				local pos = t:LocalToWorld(t:OBBCenter())
-
-				pos.x = math.Round(pos.x)
-				pos.y = math.Round(pos.y)
-				pos.z = math.Round(pos.z)
-
-				local owner = t:GetOwner() or t.Owner
-				if owner ~= ply and not owner:HasTeam(TEAM_TRAITOR) then
-					table.insert(targets, {subrole = -1, pos = pos})
-				end
-			end
-
-			return targets
-		else
-			return false
-		end
-	end
-
 	-- Give Loadout on respawn and rolechange	
 	function ROLE:GiveRoleLoadout(ply, isRoleChange)
 		ply:GiveEquipmentWeapon("weapon_ttt_crystalknife")
