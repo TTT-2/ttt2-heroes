@@ -43,7 +43,10 @@ function ENT:Initialize()
 	self:PhysWake()
 
 	if SERVER then
-		markerVision.RegisterEntity(self, ROLE_SUPERVILLAIN, VISIBLE_FOR_ROLE)
+		local mvObject = self:AddMarkerVision("crystal_supervillain")
+		mvObject:SetOwner(ROLE_SUPERVILLAIN)
+		mvObject:SetVisibleFor(VISIBLE_FOR_ROLE)
+		mvObject:SyncToClients()
 	end
 end
 
@@ -183,6 +186,10 @@ function ENT:OnRemove()
 	if IsValid(owner) then
 		hook.Run("TTTHRemoveCrystal", owner)
 	end
+
+	if SERVER then
+		self:RemoveMarkerVision("crystal_supervillain")
+	end
 end
 
 hook.Add("PlayerDisconnected", "TTT2CrystalDestroy", function(ply)
@@ -241,8 +248,9 @@ if CLIENT then
 	hook.Add("TTT2RenderMarkerVisionInfo", "HUDDrawMarkerVisionCrystal", function(mvData)
 		local client = LocalPlayer()
 		local ent = mvData:GetEntity()
+		local mvObject = mvData:GetMarkerVisionObject()
 
-		if not client:IsTerror() or not IsValid(ent) or ent:GetClass() ~= "ttt_crystal" then return end
+		if not client:IsTerror() or not mvObject:IsObjectFor(ent, "crystal_supervillain") then return end
 
 		local owner = ent:GetOwner()
 		local nick = IsValid(owner) and owner:Nick() or "---"
@@ -257,6 +265,6 @@ if CLIENT then
 		mvData:AddDescriptionLine(ParT("marker_vision_owner", {owner = nick}))
 		mvData:AddDescriptionLine(ParT("marker_vision_distance", {distance = distance}))
 
-		mvData:AddDescriptionLine(TryT("marker_vision_visible_for_" .. markerVision.GetVisibleFor(ent)), COLOR_SLATEGRAY)
+		mvData:AddDescriptionLine(TryT(mvObject:GetVisibleForTranslationKey()), COLOR_SLATEGRAY)
 	end)
 end
