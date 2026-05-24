@@ -105,7 +105,7 @@ function ENT:OnTakeDamage(dmginfo)
 
 		GiveCrystalCredits(att, self)
 
-		if IsValid(att) and att:GetSubRole() == ROLE_SIDEKICK and owner:HasTeam(TEAM_INNOCENT) then
+		if IsValid(att) and att:GetSubRole() == ROLE_SIDEKICK and owner:GetTeam() == TEAM_INNOCENT then
 			local text = att:Nick() .. " ist ein SIDEKICK!"
 
 			for _, v in ipairs(player.GetAll()) do
